@@ -1,6 +1,8 @@
 import subprocess
 import time
 import sys
+import signal
+import os
 
 def process_start():
     global estimator, recorder
@@ -16,7 +18,7 @@ def process_start():
     )
 
     # run.sh 스크립트를 실행하는 프로세스
-    estimator = subprocess.Popen(["bash", "run.sh"], stdout=subprocess.DEVNULL) # 출력은 보지 않음
+    estimator = subprocess.Popen(["bash", "run.sh"], stdout=subprocess.DEVNULL, preexec_fn=os.setsid) # 출력은 보지 않음
 
 # r: 시작
 # q: 종료
@@ -28,9 +30,8 @@ def recorder_send_cmd(cmd):
 
 def estimator_finish():
     global estimator
-    if estimator.poll() is None: # 프로세스가 아직 종료되지 않았으면
-        estimator.kill()    # 프로세스 종료
-        # print("Estimator process terminated.")
+
+    os.killpg(os.getpgid(estimator.pid), signal.SIGINT)
     
 def recorder_finish():
     global recorder

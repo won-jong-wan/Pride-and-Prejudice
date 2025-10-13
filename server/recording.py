@@ -32,9 +32,13 @@ class VideoAudioRecorderApp:
 
         # OpenCV 화면용 pipeline
         pipeline_str = (
-            "rtspsrc location=rtsp://127.0.0.1:8554/test ! rtph264depay ! avdec_h264  ! "
-            "videoconvert ! "
+            "rtspsrc location=rtsp://127.0.0.1:8554/test latency=0 ! "
+            "rtph264depay ! "
+            "h264parse ! "
+            "avdec_h264 max-threads=4 ! "
+            "videoconvert n-threads=4 ! "
             "video/x-raw,format=BGR,width=640,height=480 ! "
+            "queue max-size-buffers=3 ! "
             "appsink name=opencv_sink emit-signals=true max-buffers=3 drop=true sync=false"
         )
         self.pipeline = Gst.parse_launch(pipeline_str)
