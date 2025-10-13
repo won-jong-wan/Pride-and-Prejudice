@@ -1,0 +1,1 @@
+python pose_est2.py --hef models/vit_pose_small.hef --camera /dev/video0 --conf 0.6 --width 192 --height 256
