@@ -27,6 +27,27 @@ def upload_file():
 def download_file(filename):
     return send_from_directory(app.config['FOLDER'], filename)
 
+# http://<Raspberry_Pi_IP>:5000/command/command 형식으로 GET 요청을 받습니다.
+@app.route('/command/<cmd>')
+def execute_command(cmd):
+    print(f"'{cmd}' command received.")
+    
+    # 'start_record' command received
+    if cmd == 'start_record':
+        # 여기에 실제 녹음 시작 코드를 넣으면 됩니다.
+        print(">> start recording!")
+        # 예시: os.system("arecord my_audio.wav &")
+        return f"'{cmd}' command executed successfully!", 200
+
+    # 'stop_record' command received
+    elif cmd == 'stop_record':
+        print(">> stop recording!")
+        # 예시: os.system("killall arecord")
+        return f"'{cmd}' command executed successfully!", 200
+
+    else:
+        return "Unknown command.", 400
+
 if __name__ == '__main__':
-    # host='0.0.0.0'는 모든 IP에서 접속 가능하게 합니다.
+    # host='0.0.0.0' allows access from all IPs.
     app.run(host='10.10.14.80', port=5000)
