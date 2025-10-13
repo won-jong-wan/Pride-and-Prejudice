@@ -1,0 +1,1 @@
+python parallel_inference.py --hef1 models/vit_pose_small.hef --hef2 models/mspn_regnetx_800mf.hef --camera /dev/video0
