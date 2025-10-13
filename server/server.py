@@ -46,7 +46,6 @@ def execute_command(cmd):
         print(">> stop recording!")
         recorder_send_cmd('q')  # 녹음 종료 명령어 전송
         estimator_finish()      # estimator 프로세스 종료
-        recorder_finish()       # recorder 프로세스 종료
         return f"'{cmd}' command executed successfully!", 200
 
     else:

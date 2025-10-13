@@ -7,6 +7,8 @@ from functools import partial
 from pose_analyzer_kalman import KalmanPoseAnalyzer
 from pose_logger import create_pose_logger
 
+import signal
+
 class MSPNPostProcessor:
     def __init__(self):
         self.num_keypoints = 17

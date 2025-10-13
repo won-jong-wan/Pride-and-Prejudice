@@ -1,12 +1,18 @@
 import gi
+gi.require_version('Gst', '1.0')
+from gi.repository import Gst
 import cv2
 import numpy as np
 import threading
 import time
 import requests
-from gi.repository import Gst
+import select
+import sys
+import os
 
-gi.require_version('Gst', '1.0')
+# Qt backend 설정
+os.environ["QT_QPA_PLATFORM"] = "xcb"
+
 Gst.init(None)
 
 SERVER_URL = "http://127.0.0.1:5000"  # 서버 주소
@@ -22,12 +28,14 @@ class VideoAudioRecorderApp:
         self.audio_pipeline = None
         self.video_src = None
 
+        # "gst-launch-1.0 rtspsrc location=rtsp://127.0.0.1:8554/test ! rtph264depay ! avdec_h264 ! videoconvert ! autovideosink"
+
         # OpenCV 화면용 pipeline
         pipeline_str = (
-            "v4l2src device=/dev/video0 ! "
+            "rtspsrc location=rtsp://127.0.0.1:8554/test ! rtph264depay ! avdec_h264  ! "
             "videoconvert ! "
             "video/x-raw,format=BGR,width=640,height=480 ! "
-            "appsink name=opencv_sink emit-signals=true max-buffers=1 drop=true"
+            "appsink name=opencv_sink emit-signals=true max-buffers=3 drop=true sync=false"
         )
         self.pipeline = Gst.parse_launch(pipeline_str)
         self.appsink = self.pipeline.get_by_name("opencv_sink")
@@ -67,14 +75,14 @@ class VideoAudioRecorderApp:
             "appsrc name=video_src is-live=true block=true format=time "
             "caps=video/x-raw,format=BGR,width=640,height=480,framerate=30/1 ! "
             "videoconvert ! "
-            "x264enc bitrate=2000 speed-preset=ultrafast tune=zerolatency key-int-max=30 ! "
+            "x264enc bitrate=2000 speed-preset=superfast tune=zerolatency key-int-max=30 ! "
             "mp4mux faststart=true ! filesink location={}".format(video_filename)
         )
         self.video_pipeline = Gst.parse_launch(video_pipeline_str)
         self.video_src = self.video_pipeline.get_by_name("video_src")
         self.video_pipeline.set_state(Gst.State.PLAYING)
 
-        # 오디오 pipeline (장치 hw:2,0 사용)
+        # 오디오 pipeline
         audio_pipeline_str = (
             "alsasrc device=hw:2,0 ! audioconvert ! audioresample ! "
             "wavenc ! filesink location={}".format(audio_filename)
@@ -136,21 +144,35 @@ class VideoAudioRecorderApp:
 
     def _push_frames(self):
         frame_count = 0
+        last_push_time = time.time()
+        target_fps = 30
+        frame_interval = 1.0 / target_fps
+        
         while self.recording:
+            current_time = time.time()
+            elapsed = current_time - last_push_time
+            
+            if elapsed < frame_interval:
+                time.sleep(0.001)  # Short sleep to prevent CPU hogging
+                continue
+                
             with self.frame_lock:
                 if self.latest_frame is None:
                     continue
                 frame = self.latest_frame.copy()
+                
             data = frame.tobytes()
             buf = Gst.Buffer.new_allocate(None, len(data), None)
             buf.fill(0, data)
-            buf.duration = Gst.util_uint64_scale_int(1, Gst.SECOND, 30)
+            buf.duration = Gst.util_uint64_scale_int(1, Gst.SECOND, target_fps)
             timestamp = frame_count * buf.duration
             buf.pts = buf.dts = timestamp
+            
             if self.video_src:
                 self.video_src.emit("push-buffer", buf)
+                
             frame_count += 1
-            time.sleep(1 / 30.0)
+            last_push_time = current_time
 
     def toggle_recording(self):
         if self.recording:
@@ -170,17 +192,24 @@ class VideoAudioRecorderApp:
     def run(self):
         print("Camera preview running. Press 'r' to start/stop recording, 'q' to quit.")
         while True:
+            # 터미널 입력 확인
+            ready, _, _ = select.select([sys.stdin], [], [], 0.1)
+            if ready:
+                key = sys.stdin.readline().strip().lower()
+                if key == 'r':
+                    self.toggle_recording()
+                elif key == 'q':
+                    if self.recording:
+                        self.stop_recording()
+                    break
+
+            # 프레임 표시
             with self.frame_lock:
                 frame = self.latest_frame
             if frame is not None:
                 cv2.imshow("Camera Preview", frame)
-            key = cv2.waitKey(1) & 0xFF
-            if key == ord("r"):
-                self.toggle_recording()
-            elif key == ord("q"):
-                if self.recording:
-                    self.stop_recording()
-                break
+                cv2.waitKey(1)
+
         cv2.destroyAllWindows()
         if self.pipeline:
             self.pipeline.set_state(Gst.State.NULL)
