@@ -77,4 +77,4 @@ def run_camera_inference(hef_path):
     print(f"✅ 총 {frame_count} 프레임 처리")
 
 if __name__ == "__main__":
-    run_camera_inference("resmasking.hef")
+    run_camera_inference("../models/resmasking.hef")
