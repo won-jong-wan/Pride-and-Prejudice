@@ -1,1 +1,1 @@
-python pose_est2.py --hef models/vit_pose_small.hef --camera rtsp://127.0.0.1:8554/test --conf 0.6 --width 192 --height 256
+python scripts/pose_est/pose_est2.py --hef models/vit_pose_small.hef --camera rtsp://127.0.0.1:8554/test --conf 0.6 --width 192 --height 256
