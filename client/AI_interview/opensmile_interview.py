@@ -49,27 +49,22 @@ def analyze_stability(audio_path: str):
     return features, "ok"
 
 def get_stability_score(jitter, shimmer,hnr):
-      # 1️⃣ 기준값 완화 (실제 환경에 맞게)
-    JITTER_REF = 0.05      # 현실 기준으로 약 3배 완화
-    SHIMMER_REF = 0.45   # 기존 0.10보다 완화
-    HNR_REF_GOOD = 15.0
-    HNR_REF_BAD = 10.0
+ # 1️⃣ 기준 완화
+    JITTER_REF = 0.07
+    SHIMMER_REF = 0.6
 
-    # 2️⃣ 개별 점수 (0~10)
-    # 낮을수록 좋은 jitter/shimmer → 1 - (value/ref)
+    # 2️⃣ 개별 점수
     score_jitter = max(0, 1 - (jitter / JITTER_REF))
     score_shimmer = max(0, 1 - (shimmer / SHIMMER_REF))
-    
-    # HNR은 높을수록 좋음 → (value / 20)으로 스케일링
-    # 20dB 이상이면 매우 좋은 음질
-    score_hnr = min(1.0, max(0, hnr / 20.0))
+    score_hnr = min(1.0, max(0, hnr / 20.0))  # 20dB 이상이면 매우 깨끗함
 
-    # 3️⃣ 가중 평균 (jitter/shimmer 40%, HNR 20%)
-    score = (score_jitter * 0.3 + score_shimmer * 0.3 + score_hnr * 0.4) * 10
+    # 3️⃣ 가중 평균 (HNR 비중 ↑)
+    score = (score_jitter * 0.25 + score_shimmer * 0.25 + score_hnr * 0.5) * 10
 
-    # 4️⃣ 스케일 보정 (전체 점수 상향)
-    score = min(10.0, (score * 1.2) + 1.0)
-    # 4️⃣ 라벨 결정
+    # 4️⃣ 스케일 보정 (분포 확장)
+    score = min(10.0, (score * 1.4) + 2.0)
+
+    # 5️⃣ 라벨
     if score >= 8.0:
         label, color = "안정적 ✅", "success"
     elif score >= 5.0:
@@ -151,27 +146,27 @@ llm = ChatGoogleGenerativeAI(
 )
 
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "너는 전문 면접관 역할을 맡는다. 아래는 면접자의 행동 분석 데이터이다. 이 데이터에는 면접 중 감지된 자세, 표정, 음성의 특징이 포함된다."),
+    ("system", "너는 전문 면접관이다. 아래는 면접자의 행동 분석 결과이다. 음성, 자세, 제스처 등의 데이터를 참고하여 면접자의 발성과 태도를 평가하고 피드백을 제공하라."),
     ("human", """
-면접 답변 분석:
+면접 답변:
 - Transcript: {transcript}
 
-[음성 분석 결과]
-- 피치 흔들림 (Jitter): {jitter:.4f}
-- 볼륨 흔들림 (Shimmer): {shimmer:.4f}
-- 배음대잡음비 (HNR): {hnr:.2f} dB
-- 피치 표준편차 (F0_std): {f0_std:.2f}
-- 볼륨 표준편차 (Loudness_std): {loudness_std:.2f}
-- 전반적 평가: {label}
+[음성 분석 요약]
+- 안정성 점수: {stability_score:.2f}/10
+- 전반적 평가 등급: {label}
 
-자세 및 제스처 활용: {posture}
+[자세 및 제스처]
+- {posture}
 
 요구사항:
-1. 데이터를 기반으로 면접자의 행동을 **객관적으로 요약**한다. (숫자, 횟수 포함)
-2. 면접관의 입장에서 면접자에게 도움이 될 **피드백을 2~3문장**으로 제시한다.  
-   - 긍정적인 부분을 먼저 짚고, 개선할 점을 제안한다.  
-   - 너무 공격적이지 말고 **친절하고 전문적인 톤**을 유지한다.  
-3. 피드백은 **간결하고 실용적으로** 작성한다.
+1. 위 데이터를 참고해 면접자의 **발성 안정성, 자신감, 전달력, 태도**를 종합적으로 평가하라.  
+2. Jitter, Shimmer, HNR 같은 기술적 용어는 언급하지 말고,  
+   **청각적으로 느껴지는 인상(예: 떨림, 안정감, 자신감 등)** 으로 표현하라.  
+3. 피드백은 **3문장 이내**로 구성하며,  
+   - 첫 문장은 강점을 짚고  
+   - 두 번째 문장은 개선점을 부드럽게 제시하며  
+   - 세 번째 문장은 면접자의 성장 가능성을 긍정적으로 마무리하라.  
+4. 말투는 **전문적이고 따뜻하게**, 실제 면접관처럼 작성하라.  
 
 출력 형식:
 - 분석 요약: ...
@@ -182,7 +177,6 @@ prompt = ChatPromptTemplate.from_messages([
 
 chain = LLMChain(llm=llm, prompt=prompt)
 
-chain = LLMChain(llm=llm, prompt=prompt)
 
 # ============================
 # streamlit 실행
@@ -291,15 +285,11 @@ if uploaded_file and posture_file:
 
         # 4️⃣ LLM 피드백 생성
         feedback = chain.run({
-            "transcript": transcript,
-            "jitter": features["jitter"],
-            "shimmer": features["shimmer"],
-            "hnr": features["hnr"],
-            "f0_std": features["f0_std"],
-            "loudness_std": features["loudness_std"],
-            "label": voice_label,
-            "posture": summary["label"] if summary else "데이터 없음"
-        })
+        "transcript": transcript,
+        "stability_score": stability_score,
+        "label": voice_label,
+        "posture": summary["label"] if summary else "데이터 없음"
+    })
         
 
         # 5️⃣ 결과 저장
