@@ -3,7 +3,7 @@ from flask import Flask, request, send_from_directory
 from scripts.process_call import process_start, rtsp_server_finish, estimator_finish, recorder_finish
 
 # 'uploads' 라는 폴더를 만들고 파일을 여기 저장할 겁니다.
-FOLDER = 'srv_tmp'
+FOLDER = '../srv_tmp'
 if not os.path.exists(FOLDER):
     os.makedirs(FOLDER)
 
