@@ -4,6 +4,7 @@ import os
 from hailo_platform import VDevice, HailoSchedulingAlgorithm
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+#output_metrix = ['positive', 'neutral', 'negative']
 output_metrix = ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
 
 def run_camera_inference(hef_path):
@@ -71,8 +72,6 @@ def run_camera_inference(hef_path):
 
                     # 입력 버퍼 설정
                     bindings.input().set_buffer(input_tensor)
-
-                    print(input_tensor.shape)
                 
                     # 출력 버퍼 준비
                     output_buffer = np.empty(output_shape, dtype=np.uint8)
@@ -84,8 +83,10 @@ def run_camera_inference(hef_path):
                     # 결과 가져오기
                     outputs = bindings.output().get_buffer()
 
+                    print(outputs)
+
                     # Interpret output: try to get probabilities and pick argmax
-                    out = outputs[0]
+                    out = outputs
                     probs = np.squeeze(out)
                     if probs.ndim == 2 and probs.shape[0] == 1:
                         probs = probs[0]
@@ -115,4 +116,5 @@ def run_camera_inference(hef_path):
     print(f"✅ 총 {frame_count} 프레임 처리")
 
 if __name__ == "__main__":
-    run_camera_inference("../models/resmasking.hef")
+    # run_camera_inference("../../models/best_model_float32_3class.hef")
+    run_camera_inference("../../models/resmasking.hef")
