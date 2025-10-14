@@ -5,9 +5,9 @@ import time
 from collections import deque
 from functools import partial
 from hailo_platform import VDevice, HailoSchedulingAlgorithm, FormatType
-from pose_analyzer_kalman import KalmanPoseAnalyzer
-from pose_logger import create_pose_logger
-from pose_est2 import MSPNPostProcessor
+from ..pose_est.pose_analyzer_kalman import KalmanPoseAnalyzer
+# from pose_logger import create_pose_logger
+from ..pose_est.pose_est_main import MSPNPostProcessor
 
 INPUT_LAYER_M1 = "vit_pose_small/input_layer1"
 INPUT_LAYER_M2 = "mspn_regnetx_800mf/input_layer1"
@@ -80,21 +80,6 @@ class ParallelModelInference:
         img = cv2.resize(frame, self.input_size)
         img = np.expand_dims(img, axis=0)  # batch dimension 추가
         return img
-    
-    # def inference_callback(self, model_name, completion_info, bindings, frame):
-    #     """비동기 추론 완료 시 호출되는 콜백"""
-    #     if completion_info.exception:
-    #         print(f"Error during {model_name} inference: {completion_info.exception}")
-    #         return
-        
-    #     try:
-    #         # 결과 저장
-    #         output = bindings.output_bindings[0].data
-    #         self.results[model_name] = output
-    #         self.frames_ready += 1
-            
-    #     except Exception as e:
-    #         print(f"Error in {model_name} callback: {e}")
     
     def run(self):
         """메인 루프 (병렬 실행)"""

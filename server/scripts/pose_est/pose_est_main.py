@@ -4,8 +4,8 @@ from hailo_platform import VDevice, HailoSchedulingAlgorithm, FormatType
 import time
 from collections import deque
 from functools import partial
-from pose_analyzer_kalman import KalmanPoseAnalyzer
-from pose_logger import create_pose_logger
+from .pose_analyzer_kalman import KalmanPoseAnalyzer
+from .pose_logger import create_pose_logger
 
 import signal
 

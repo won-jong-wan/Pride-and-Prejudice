@@ -1,7 +1,7 @@
 import numpy as np
 import time
 from collections import deque
-from pose_analyzer import PoseAnalyzer
+from .pose_analyzer import PoseAnalyzer
 
 class SimpleKalmanFilter:
     def __init__(self, process_noise=0.1, measurement_noise=0.1):

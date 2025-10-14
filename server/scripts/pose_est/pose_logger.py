@@ -17,7 +17,7 @@ class PoseDataLogger:
         if save_dir is None:
             # 스크립트의 현재 디렉토리 기준으로 절대 경로 계산
             project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-            save_dir = os.path.join(project_root, "srv_tmp", "pose_logs")
+            save_dir = os.path.join(project_root, "srv_tmp", "xml")
         self.save_dir = save_dir
         self.fps = fps
         self.cooldown_seconds = cooldown_seconds

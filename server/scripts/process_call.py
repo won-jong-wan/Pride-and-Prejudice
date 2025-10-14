@@ -10,7 +10,7 @@ def process_start():
     time.sleep(1)
 
     rtsp_server = subprocess.Popen(
-        [sys.executable, "scripts/gstreamer/rtsp.py"],
+        [sys.executable, '-m', 'scripts.gstreamer.rtsp'],
         stdout=subprocess.DEVNULL
     )
 
@@ -18,16 +18,20 @@ def process_start():
     
     # 영상 데이터 저장을 처리하는 파이썬 스크립트 실행
     recorder = subprocess.Popen(
-        [sys.executable, "scripts/gstreamer/recorder.py"], # 현재 파이썬 실행기로 스크립트 실행
+        [sys.executable, '-m', 'scripts.gstreamer.recorder'], # 현재 파이썬 실행기로 스크립트 실행
         stdout=subprocess.DEVNULL    # 프로세스의 출력을 읽어올 통로
     )
 
-    # run.sh 스크립트를 실행하는 프로세스
     estimator = subprocess.Popen(
-        ["bash", "run.sh"], 
+        [sys.executable, '-m', 'scripts.pose_est.pose_est_main',
+        '--hef', 'models/vit_pose_small.hef',
+        '--camera', 'rtsp://127.0.0.1:8554/test',
+        '--conf', '0.6',
+        '--width', '192',
+        '--height', '256'], 
         stdout=subprocess.DEVNULL, 
         preexec_fn=os.setsid
-    ) # 출력은 보지 않음
+    )
 
 def rtsp_server_finish():
     global rtsp_server
