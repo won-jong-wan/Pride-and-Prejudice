@@ -17,3 +17,8 @@ def save_bytes(save_dir: Path, name: str, data: bytes) -> Path:
     path = save_dir / name
     path.write_bytes(data)
     return path
+
+def save_text(save_dir: Path, name: str, text: str, encoding: str = "utf-8") -> Path:
+    path = save_dir / name
+    path.write_text(text, encoding=encoding)
+    return path
