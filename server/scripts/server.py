@@ -2,8 +2,10 @@ import os
 from flask import Flask, request, send_from_directory
 from scripts.process_call import process_start, rtsp_server_finish, estimator_finish, recorder_finish
 
-# 'uploads' 라는 폴더를 만들고 파일을 여기 저장할 겁니다.
-FOLDER = '../srv_tmp'
+script_path = os.path.abspath(__file__)
+main_dir = os.path.dirname(os.path.dirname(script_path))
+
+FOLDER = os.path.join(main_dir, 'srv_tmp')
 if not os.path.exists(FOLDER):
     os.makedirs(FOLDER)
 

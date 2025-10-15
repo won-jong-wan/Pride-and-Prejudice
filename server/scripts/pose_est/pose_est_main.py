@@ -311,7 +311,7 @@ class RealtimePoseEstimation:
                     bindings = configured_infer_model.create_bindings()
                     bindings.input().set_buffer(input_data)
                     bindings.output().set_buffer(
-                        np.empty(self.infer_model.output().shape).astype(np.uint8)
+                        np.zeros(self.infer_model.output().shape, dtype=np.uint8)
                     )
                     
                     # 비동기 파이프라인 준비 대기

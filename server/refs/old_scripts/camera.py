@@ -4,8 +4,57 @@ import os
 from hailo_platform import VDevice, HailoSchedulingAlgorithm
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-#output_metrix = ['positive', 'neutral', 'negative']
-output_metrix = ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+# output_metrix = ['positive', 'neutral', 'negative']
+output_metrix = ['angry', 'disgust', 'happy', 'neutral', 'surprise']
+# output_metrix = ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
+
+# 추후 NPU 추론으로 바꿀 수도 있음
+def face_detect(image):
+    faces = face_cascade.detectMultiScale(image, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    return faces
+
+def extract_face_roi(image, faces):
+    if faces is None or len(faces) == 0:
+        return None
+
+    x, y, w, h = max(faces, key=lambda r: r[2] * r[3])
+    face_roi = image[y:y + h, x:x + w]
+
+    return face_roi, (x, y, w, h)
+
+def preprocess(image, target_size):
+    # Resize the image to the target size
+    resized_image = cv2.resize(image, (target_size[1], target_size[0]))
+
+    # Convert the image to RGB (if needed)
+    rgb_image = cv2.cvtColor(resized_image, cv2.COLOR_BGR2RGB)
+
+    # Expand dimensions to match model input shape (1, height, width, channels)
+    input_tensor = np.expand_dims(rgb_image, axis=0).astype(np.uint8)
+
+    return input_tensor
+
+def postprocess(frame, outputs, bbox):
+    x, y, w, h = bbox
+
+    out = outputs
+    probs = np.squeeze(out)
+
+    #print(probs)
+
+    if probs.ndim == 2 and probs.shape[0] == 1:
+        probs = probs[0]
+    
+    pred_idx = int(np.argmax(probs))
+
+    # Map to human label for common 2-class mask model, otherwise generic label
+    emotion = output_metrix[pred_idx]
+
+    # Draw rectangle around face and label with predicted emotion
+    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+    cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+
+    return frame
 
 def run_camera_inference(hef_path):
     timeout_ms = 1000
@@ -49,60 +98,50 @@ def run_camera_inference(hef_path):
                 gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
                 # Detect faces in the frame
-                faces = face_cascade.detectMultiScale(gray_frame, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+                faces = face_detect(gray_frame)
 
-                for (x, y, w, h) in faces:
-                    # Extract the face ROI (Region of Interest)
-                    face_roi = gray_frame[y:y + h, x:x + w]
+                try: 
+                    face_roi, (x, y, w, h) = extract_face_roi(gray_frame, faces)
+                except Exception as e:
+                    face_roi = None
+                    x, y, w, h = 0, 0, 0, 0
 
-                    # Preprocess face_roi to match ONNX model input
-                    # Determine target size from model input shape if available
-                    try:
-                        _, c, ih, iw = [int(s) if s is not None else None for s in input_shape]
-                    except Exception:
-                        ih, iw = 224, 224
-                    if ih is None or iw is None:
-                        ih, iw = 224, 224
+                if face_roi is None:
+                    # no faces -> continue to next frame
+                    frame_count += 1
+                    cv2.imshow('Hailo Camera', frame)
+                    if cv2.waitKey(1) & 0xFF == ord('q'):
+                        break
+                    continue
 
-                    resized = cv2.resize(face_roi, (input_shape[1], input_shape[0]))
-                    # Model likely expects floats in [0,1] and channel-first format
-                    resized = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
-                    input_tensor = resized.astype(np.uint8)
-                    # input_tensor = np.expand_dims(input_tensor, axis=0)  # add batch
+                # Preprocess face_roi to match ONNX model input
+                # Determine target size from model input shape if available
+                ih = input_shape[1]
+                iw = input_shape[0]
 
-                    # 입력 버퍼 설정
-                    bindings.input().set_buffer(input_tensor)
+                input_tensor = preprocess(face_roi, (iw, ih))
+
+                #print(input_shape)
+
+                # NPU 추론
+
+                # 입력 버퍼 설정
+                bindings.input().set_buffer(input_tensor)
+
+                # 출력 버퍼 준비
+                output_buffer = np.empty(output_shape, dtype=np.uint8)
+                bindings.output().set_buffer(output_buffer)
+
+                # 동기 추론
+                configured_infer_model.run([bindings], timeout_ms)
+
+                # 결과 가져오기
+                outputs = bindings.output().get_buffer()
+
+                # NPU 추론 끝
                 
-                    # 출력 버퍼 준비
-                    output_buffer = np.empty(output_shape, dtype=np.uint8)
-                    bindings.output().set_buffer(output_buffer)
-                
-                    # 동기 추론
-                    configured_infer_model.run([bindings], timeout_ms)
-                
-                    # 결과 가져오기
-                    outputs = bindings.output().get_buffer()
+                frame = postprocess(frame, outputs, (x, y, w, h))
 
-                    print(outputs)
-
-                    # Interpret output: try to get probabilities and pick argmax
-                    out = outputs
-                    probs = np.squeeze(out)
-                    if probs.ndim == 2 and probs.shape[0] == 1:
-                        probs = probs[0]
-                    pred_idx = int(np.argmax(probs))
-
-                    # Map to human label for common 2-class mask model, otherwise generic label
-                    if probs.size == 2:
-                        labels = ['NoMask', 'Mask']
-                        emotion = labels[pred_idx]
-                    else:
-                        emotion = output_metrix[pred_idx]
-
-                    # Draw rectangle around face and label with predicted emotion
-                        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-                        cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
-                
                 frame_count += 1
                 
                 # 화면 표시
@@ -116,5 +155,5 @@ def run_camera_inference(hef_path):
     print(f"✅ 총 {frame_count} 프레임 처리")
 
 if __name__ == "__main__":
-    # run_camera_inference("../../models/best_model_float32_3class.hef")
-    run_camera_inference("../../models/resmasking.hef")
+    run_camera_inference("../../models/best_model_float32_5class.hef")
+    # run_camera_inference("../../models/resmasking.hef")

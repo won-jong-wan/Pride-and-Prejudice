@@ -1,0 +1,1 @@
+python -m scripts.parallel.parallel_mux --hef1 models/vit_pose_small.hef --hef2 models/best_model_float32_5class.hef --camera /dev/video0
