@@ -13,11 +13,11 @@ import requests
 # 0️⃣ API 키 설정
 # ============================
 # Google GenAI
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "AIzaSyDuI6DK3v17kGqqSyM4uHRWoC2qRC-Kzpg")
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "")
+
 # ============================
 # 1️⃣ Whisper STT
 # ============================
-
 import whisper
 import torch
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -82,8 +82,6 @@ def get_stability_score(jitter, shimmer,hnr):
 # ============================
 # 3️⃣ 자세 분석
 # ============================
-import xml.etree.ElementTree as ET
-
 import xml.etree.ElementTree as ET
 
 def parse_posture_summary(xml_path):
@@ -213,7 +211,7 @@ st.markdown(
 st.divider()
 
 # 라즈베리파이 Flask 서버 IP
-SERVER_URL = "http://10.10.14.80:5000"
+SERVER_URL = "http://10.10.14.00:5000"
 
 DL_DIR = Path("downloaded")
 DL_DIR.mkdir(parents=True, exist_ok=True)
@@ -255,6 +253,7 @@ def _save_local(resp, filename_hint):
     path = SAVE_DIR / fname
     path.write_bytes(resp.content)
     return path.resolve()
+
 col1, col2 = st.columns(2)
 
 with col1:
@@ -325,33 +324,7 @@ def wait_until_ready(url, max_wait_s=8, interval_s=0.5):
         st.info(f"파일 확인 중 오류: {last_err}")
     return None
 
-def auto_download_in_browser(file_url, filename, height=50):
-    """
-    브라우저 자동 다운로드 트리거 (성공률 높이기 위해 2가지 방식 동시 시도 + 약간 지연)
-    """
-    components.html(f"""
-        <!doctype html>
-        <html><body>
-        <a id="dl" href="{file_url}" download="{filename}">download</a>
-        <script>
-        (function() {{
-            var url = "{file_url}";
-            var name = "{filename}";
-            // 1) 새 탭 오픈 (많은 브라우저에서 사용자 제스처로 인식)
-            var win = window.open(url, "_blank");
-            // 2) 앵커 자동 클릭도 병행
-            var a = document.getElementById("dl");
-            setTimeout(function() {{ if (a) a.click(); }}, 150);
-            // 3) 새 탭이 막히면 현재 탭으로 강제 이동 (최후수단)
-            setTimeout(function() {{
-                if (!win || win.closed) {{
-                    window.location.href = url;
-                }}
-            }}, 600);
-        }})();
-        </script>
-        </body></html>
-    """, height=height)
+
 
 # ------------------ 여기부터 stop_record 성공 직후 블록에 붙이기 ------------------
 FILES = {
