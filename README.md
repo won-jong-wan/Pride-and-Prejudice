@@ -63,7 +63,7 @@ pip install -r requirements.txt
 ### 실행(예정)
 python run_interview.py --camera /dev/video0
 
-📂 프로젝트 구조
+## 📂 프로젝트 구조
 Pride-and-Prejudice/
 ├─ data/          # 텍스트 및 데이터
 ├─ scripts/       # 분석 및 처리 스크립트
@@ -72,7 +72,7 @@ Pride-and-Prejudice/
 ├─ requirements.txt
 └─ README.md
 
-🛠️ 사용 예시
+## 🛠️ 사용 예시
 
 아직 구체적인 사용 예시는 준비되지 않았습니다. 향후 실제 면접 시뮬레이션 영상과 평가 리포트 샘플을 추가할 예정입니다.
 
@@ -84,15 +84,16 @@ Pride-and-Prejudice/
 - [o] LLM 평가 시스템 연결
 - [x] PDF 리포트 자동 생성
 
-🤝 기여하기
+## 🤝 기여하기
 Issue와 Pull Request 환영합니다.
 기능 제안, 버그 리포트, 코드 개선 모두 환영합니다.
 브랜치 전략: 기능 단위로 브랜치를 생성하고, 작은 단위의 PR을 권장합니다.
 
-📜 라이선스
+## 📜 라이선스
 MIT License (추후 변경 가능)
 
-🙏 감사의 말
+
+## 🙏 감사의 말
 Jane Austen의 원작 Pride and Prejudice (퍼블릭 도메인)에서 제목 영감을 얻었습니다.
 Hailo, SadTalker, OpenAI LLM 등 오픈소스 및 AI 기술에 감사드립니다.
 
