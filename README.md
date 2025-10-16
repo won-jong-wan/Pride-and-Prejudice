@@ -24,7 +24,6 @@
 
 <img width="1024" height="1536" alt="Copilot_20251016_145148" src="https://github.com/user-attachments/assets/79427c4a-0b88-42f4-954a-c1873c27c874" />
 
-
 **흐름**  
 1. **카메라 입력** → 면접자의 영상/음성 수집  
 2. **온 디바이스 AI (표정 인식 + 자세 인식)** → 실시간 분석  
@@ -44,26 +43,29 @@
 
 ---
 
-## 🚀 설치 및 실행
-
-> ⚠️ 현재는 초기 개발 단계로, 실행 예시는 준비 중입니다.  
-
 ### 요구 사항
 - Raspberry Pi 5
 - Hailo Edge Device
 - Python 3.10+
 - OpenCV, PyTorch, SadTalker, Hailo SDK 등
 
+---
+
 ### 설치
 ```bash
 git clone https://github.com/won-jong-wan/Pride-and-Prejudice.git
 cd Pride-and-Prejudice
 pip install -r requirements.txt
+```
 
-### 실행(예정)
+---
+
+### 실행 (예정)
 python run_interview.py --camera /dev/video0
 
-## 📂 프로젝트 구조
+---
+
+### 📂 프로젝트 구조
 Pride-and-Prejudice/
 ├─ data/          # 텍스트 및 데이터
 ├─ scripts/       # 분석 및 처리 스크립트
@@ -72,38 +74,41 @@ Pride-and-Prejudice/
 ├─ requirements.txt
 └─ README.md
 
-## 🛠️ 사용 예시
+---
 
-아직 구체적인 사용 예시는 준비되지 않았습니다.  
-향후 실제 면접 시뮬레이션 영상과 평가 리포트 샘플을 추가할 예정입니다.
+### 🛠️ 사용 예시
+아직 구체적인 사용 예시는 준비되지 않았습니다. 향후 실제 면접 시뮬레이션 영상과 평가 리포트 샘플을 추가할 예정입니다.
 
 ---
 
-## 🗺️ 로드맵
+### 🗺️ 로드맵
 
-- [x] 표정 인식 모델 연동
-- [x] 자세 인식 모델 연동
-- [ ] SadTalker 기반 시뮬레이션
-- [ ] LLM 평가 시스템 연결
-- [ ] PDF 리포트 자동 생성
+    [x] 표정 인식 모델 연동
 
----
+    [x] 자세 인식 모델 연동
 
-## 🤝 기여하기
+    [ ] SadTalker 기반 시뮬레이션
 
-- Issue와 Pull Request 환영합니다.  
-- 기능 제안, 버그 리포트, 코드 개선 모두 환영합니다.  
-- 브랜치 전략: 기능 단위로 브랜치를 생성하고, 작은 단위의 PR을 권장합니다.  
+    [ ] LLM 평가 시스템 연결
+
+    [ ] PDF 리포트 자동 생성
 
 ---
 
-## 📜 라이선스
+### 🤝 기여하기
+Issue와 Pull Request 환영합니다.
+기능 제안, 버그 리포트, 코드 개선 모두 환영합니다.
+브랜치 전략: 기능 단위로 브랜치를 생성하고, 작은 단위의 PR을 권장합니다.
+
+---
+
+### 📜 라이선스
 
 MIT License (추후 변경 가능)
 
 ---
 
-## 🙏 감사의 말
+### 🙏 감사의 말
 
-- Jane Austen의 원작 *Pride and Prejudice* (퍼블릭 도메인)에서 제목 영감을 얻었습니다.  
-- Hailo, SadTalker, OpenAI LLM 등 오픈소스 및 AI 기술에 감사드립니다.
+Jane Austen의 원작 Pride and Prejudice (퍼블릭 도메인)에서 제목 영감을 얻었습니다.
+Hailo, SadTalker, OpenAI LLM 등 오픈소스 및 AI 기술에 감사드립니다.
