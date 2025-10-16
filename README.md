@@ -61,7 +61,9 @@ pip install -r requirements.txt
 ---
 
 ### 실행 (예정)
+```bash
 python run_interview.py --camera /dev/video0
+```
 
 ---
 
