@@ -68,6 +68,7 @@ python run_interview.py --camera /dev/video0
 ---
 
 ### 📂 프로젝트 구조
+```
 Pride-and-Prejudice/
 ├─ data/          # 텍스트 및 데이터
 ├─ scripts/       # 분석 및 처리 스크립트
@@ -75,6 +76,7 @@ Pride-and-Prejudice/
 ├─ reports/       # 결과 리포트
 ├─ requirements.txt
 └─ README.md
+```
 
 ---
 
