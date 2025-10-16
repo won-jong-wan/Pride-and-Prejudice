@@ -22,7 +22,7 @@
 
 아래 다이어그램은 면접 평가 시스템의 전체 흐름을 보여줍니다.
 
-<img width="1024" height="1536" alt="Copilot_20251016_145148" src="https://github.com/user-attachments/assets/79427c4a-0b88-42f4-954a-c1873c27c874" />
+<img width="600" height="800" alt="Copilot_20251016_145148" src="https://github.com/user-attachments/assets/79427c4a-0b88-42f4-954a-c1873c27c874" />
 
 **흐름**  
 1. **카메라 입력** → 면접자의 영상/음성 수집  
