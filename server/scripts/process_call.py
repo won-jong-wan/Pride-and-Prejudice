@@ -4,35 +4,6 @@ import sys
 import signal
 import os
 
-# def process_start():
-#     global rtsp_server, p_estimator, recorder
-
-#     time.sleep(1)
-
-#     rtsp_server = subprocess.Popen(
-#         [sys.executable, '-m', 'scripts.gstreamer.rtsp', '8554', '90'],
-#         stdout=subprocess.DEVNULL
-#     )
-
-#     time.sleep(1)  # RTSP 서버가 시작될 시간을 줍니다.
-    
-#     # 영상 데이터 저장을 처리하는 파이썬 스크립트 실행
-#     recorder = subprocess.Popen(
-#         [sys.executable, '-m', 'scripts.gstreamer.recorder'], # 현재 파이썬 실행기로 스크립트 실행
-#         stdout=subprocess.DEVNULL    # 프로세스의 출력을 읽어올 통로
-#     )
-
-#     p_estimator = subprocess.Popen(
-#         [sys.executable, '-m', 'scripts.pose_est.pose_est_main',
-#         '--hef', 'models/vit_pose_small.hef',
-#         '--camera', 'rtsp://127.0.0.1:8554/test',
-#         '--conf', '0.4',
-#         '--width', '192',
-#         '--height', '256'], 
-#         stdout=subprocess.DEVNULL, 
-#         preexec_fn=os.setsid
-#     )
-
 class ProcessManager:
     def __init__(self):
         self.rtsp_server = None
@@ -40,10 +11,17 @@ class ProcessManager:
         self.p_estimator = None
         self.recorder = None
 
-    def rtsp_start(self):
+    def rtsp_start(self, target):
+        if target == 'file':
+            rtsp_name = 'rtsp_file'
+        elif target == 'a6700':
+            rtsp_name = 'rtsp_a6700'
+        elif target == 'webcam':
+            rtsp_name = 'rtsp_webcam'
+
         self.rtsp_server = subprocess.Popen(
-            [sys.executable, '-m', 'scripts.gstreamer.rtsp', '8554', '90'],
-            stdout=subprocess.DEVNULL
+            [sys.executable, '-m', f'scripts.gstreamer.{rtsp_name}'],
+            stdout=subprocess.PIPE
         )
 
     def f_estimator_start(self):
@@ -67,10 +45,16 @@ class ProcessManager:
 
     def recorder_start(self):
         self.recorder = subprocess.Popen(
-            [sys.executable, '-m', 'scripts.gstreamer.recorder'], 
+            [sys.executable, '-m', 'scripts.gstreamer.recorder'],
             stdout=subprocess.DEVNULL
         )
         print("Recorder started.")
+
+    def xml_mix(self):
+        self.xml_mixer = subprocess.Popen(
+            [sys.executable, '-m', 'scripts.xml_mix'],
+            stdout=subprocess.DEVNULL
+        )
 
     def rtsp_server_finish(self):
         self.rtsp_server.send_signal(signal.SIGINT)

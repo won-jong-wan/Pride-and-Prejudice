@@ -286,7 +286,7 @@ def run_camera_inference(hef_path):
 
                     input_tensor = preprocess(face_roi, (iw, ih))
 
-                    #print(input_shape)
+                    print(input_tensor.shape)
 
                     # NPU 추론
 

@@ -7,7 +7,7 @@ Gst.init(None)
 
 # 파이프라인 정의
 pipeline_str = (
-    "rtspsrc location=rtsp://127.0.0.1:8554/test name=r "
+    "rtspsrc location=rtsp://10.10.14.80:8554/test name=r "
     "! rtpbin name=rtpbin "
     "mp4mux name=mux faststart=true ! filesink location=srv_tmp/mp4/video.mp4 "
     "r. ! queue max-size-buffers=4096 ! rtpbin.recv_rtp_sink_0 "
