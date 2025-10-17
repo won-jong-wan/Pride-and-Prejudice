@@ -46,6 +46,7 @@
 ### 요구 사항
 - Raspberry Pi 5
 - Hailo Edge Device
+- Jetson Nano
 - Python 3.10+
 - OpenCV, PyTorch, SadTalker, Hailo SDK 등
 
