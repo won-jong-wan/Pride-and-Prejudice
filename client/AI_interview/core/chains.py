@@ -1,4 +1,5 @@
 import os
+from functools import lru_cache
 from langchain.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -33,8 +34,13 @@ prompt = ChatPromptTemplate.from_messages([
 
 def build_feedback_chain(*, api_key: str, model: str = "gemini-2.5-flash", temperature: float = 0.6):
     llm = ChatGoogleGenerativeAI(model=model, temperature=temperature, api_key=api_key)
-    return LLMChain(llm=llm, prompt=prompt)
-
+    return LLMChain(llm=llm, prompt=LIVE_PROMPT)
+@lru_cache(maxsize=1)
+def get_feedback_chain() -> LLMChain:
+    key = os.getenv("GOOGLE_API_KEY")
+    if not key:
+        raise RuntimeError("GOOGLE_API_KEY 미설정")
+    return build_feedback_chain(api_key=key)
 
 # 라이브모드 프롬프트
 LIVE_PROMPT = ChatPromptTemplate.from_messages([
@@ -50,3 +56,61 @@ def build_live_feedback_chain(*, api_key: str, model: str = "gemini-2.5-flash", 
     llm = ChatGoogleGenerativeAI(model=model, temperature=temperature, api_key=api_key)
     # LCEL로 바로 문자열 출력
     return LIVE_PROMPT | llm | StrOutputParser()
+
+
+# --- 총평용 프롬프트 (UI에서 render(...)해 문자열로 넘김) ---
+SESSION_PROMPT = ChatPromptTemplate.from_messages([
+    ("system", "너는 전문 면접관이다. 아래 세션 요약 데이터를 바탕으로 한국어 총평을 제공하라."),
+    ("human",
+     "【음성 요약】\n{voice_summary_json}\n\n"
+     "【자세 요약】\n{posture_summary_json}\n\n"
+     "【요약 힌트(음성)】{voice_hint}\n"
+     "【요약 힌트(자세)】{posture_hint}\n\n"
+     "【최근 답변들】\n{history_compact_json}\n\n"
+     "총 {answers}개 답변을 기반으로:\n"
+     "1) 전반 총평(1~2문장)\n2) 강점(불릿 2개)\n3) 개선 제안(불릿 2개)\n"
+     "**음성(발성/전달력)**과 **자세(시선/기울임/제스처)**에 대한 코멘트를 각각 최소 1문장씩 반드시 포함.\n"
+     "기술지표명(jitter/shimmer/HNR)은 언급하지 말 것.")
+])
+# --- 라이브 코칭용 프롬프트 (답변별) ---
+LIVE_PROMPT = ChatPromptTemplate.from_messages([
+    ("system",
+     "너는 실시간 면접 코치다. 최신 발화와 비언어 신호 요약을 보고, "
+     "한국어로 1~2문장만 간결하게 코칭하거나 꼬리질문을 제시해라."),
+    ("human",
+     "[이번 발화]\n{latest_utt}\n\n[비언어 요약]\n{nonverbal}\n\n"
+     "요구사항: 1~2문장. 과한 칭찬/사족 금지. 속도/명료성/구조/톤 중 1~2개만 짚기.")
+])
+
+def get_prompt(name: str) -> ChatPromptTemplate:
+    if name == "session":
+        return SESSION_PROMPT
+    if name == "live":
+        return LIVE_PROMPT
+    raise KeyError(f"unknown prompt: {name}")
+
+# --- 라이브(답변별) 체인 (adapters.my_feedback에서 사용) ---
+@lru_cache(maxsize=1)
+def get_live_feedback_chain(model: str = "gemini-2.5-flash", temperature: float = 0.6) -> LLMChain:
+    key = os.getenv("GOOGLE_API_KEY")
+    if not key:
+        raise RuntimeError("GOOGLE_API_KEY 미설정")
+    llm = ChatGoogleGenerativeAI(model=model, temperature=temperature, api_key=key)
+    return LLMChain(llm=llm, prompt=LIVE_PROMPT)
+
+# --- 총평용: 문자열 프롬프트를 직접 넣어서 호출 (LangChain LLM만 사용) ---
+@lru_cache(maxsize=1)
+def _get_session_llm(model: str = "gemini-2.5-flash", temperature: float = 0.5):
+    key = os.getenv("GOOGLE_API_KEY")
+    if not key:
+        raise RuntimeError("GOOGLE_API_KEY 미설정")
+    return ChatGoogleGenerativeAI(model=model, temperature=temperature, api_key=key)
+
+def call_llm(payload) -> str:
+    """
+    payload: str 또는 List[BaseMessage] (ChatPromptTemplate.format_messages 결과)
+    """
+    llm = _get_session_llm()
+    resp = llm.invoke(payload)  # str도 되고, messages 리스트도 됨
+    text = getattr(resp, "content", None) or getattr(resp, "text", None) or str(resp)
+    return text.strip()

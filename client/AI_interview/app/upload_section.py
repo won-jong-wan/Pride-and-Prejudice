@@ -1,6 +1,6 @@
 from pathlib import Path
 import tempfile, streamlit as st
-from core.whisper import transcribe_file
+from core.whisper_run import transcribe_file
 from core.analysis_pose import parse_posture_summary
 from core.analysis_audio import analyze_stability, get_stability_score
 
