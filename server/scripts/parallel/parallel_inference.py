@@ -9,9 +9,6 @@ from ..pose_est.pose_analyzer_kalman import KalmanPoseAnalyzer
 # from pose_logger import create_pose_logger
 from ..pose_est.pose_est_main import MSPNPostProcessor
 
-INPUT_LAYER_M1 = "vit_pose_small/input_layer1"
-INPUT_LAYER_M2 = "mspn_regnetx_800mf/input_layer1"
-
 class ParallelModelInference:
     def __init__(self, hef_path1, hef_path2, camera_device='/dev/video0', 
                  input_size=(192, 256), conf_threshold=0.3):
@@ -42,10 +39,10 @@ class ParallelModelInference:
         self.model2 = self.vdevice.create_infer_model(hef_path2)
         
         # 입력/출력 포맷 설정 (UINT8 사용)
-        self.model1.input(INPUT_LAYER_M1).set_format_type(FormatType.UINT8)
+        self.model1.input().set_format_type(FormatType.UINT8)
         self.model1.output().set_format_type(FormatType.UINT8)
         
-        self.model2.input(INPUT_LAYER_M2).set_format_type(FormatType.UINT8)
+        self.model2.input().set_format_type(FormatType.UINT8)
         self.model2.output().set_format_type(FormatType.UINT8)
             
         # 모델 configure
@@ -104,14 +101,14 @@ class ParallelModelInference:
 
                 # 입력 데이터 설정
                 input_data_uint8 = input_data.astype(np.uint8)
-                bindings1.input(INPUT_LAYER_M1).set_buffer(input_data_uint8)
-                bindings2.input(INPUT_LAYER_M2).set_buffer(input_data_uint8)
+                bindings1.input().set_buffer(input_data_uint8)
+                bindings2.input().set_buffer(input_data_uint8)
 
                 # 결과를 저장할 버퍼 설정
                 output_shape1 = self.model1.output().shape
                 output_shape2 = self.model2.output().shape
-                bindings1.output().set_buffer(np.empty(output_shape1).astype(np.uint8))
-                bindings2.output().set_buffer(np.empty(output_shape2).astype(np.uint8))
+                bindings1.output().set_buffer(np.zeros(output_shape1, dtype=np.uint8))
+                bindings2.output().set_buffer(np.zeros(output_shape2, dtype=np.uint8))
 
                 # 콜백 함수 정의
                 def inference_callback(completion_info, model_name, bindings):

@@ -116,10 +116,16 @@ class PoseAnalyzer:
         if (left_eye[2] < 0.3 or right_eye[2] < 0.3 or
             left_shoulder[2] < 0.3 or right_shoulder[2] < 0.3):
             return False, "Low confidence in head/shoulder detection"
+        if (left_eye[0] == 0 or right_eye[0] == 0 or
+            left_shoulder[0] == 0 or right_shoulder[0] == 0):
+            return False, "zero head/shoulder detection"
         
         # 어깨와 눈까지의 거리
         left_s2e = abs(left_shoulder[0] - left_eye[0])
         right_s2e = abs(right_shoulder[0] - right_eye[0])
+
+        if( left_s2e == 0 or right_s2e == 0):
+            return False, "zero head/shoulder detection"
 
         d_s2e = max(left_s2e, right_s2e)/min(left_s2e, right_s2e)
         # print(f"d_s2e: {d_s2e}")
@@ -141,8 +147,12 @@ class PoseAnalyzer:
             return False, "Low confidence in hand/eye detection"
         
         # 양손이 교차되었는지 확인 (x좌표 비교)
-        hands_crossed = (left_wrist[0] < right_wrist[0] and 
+        if self.eye_dist != 0:
+            hands_crossed = (left_wrist[0] < right_wrist[0] and 
                         abs(left_wrist[1] - right_wrist[1])/self.eye_dist > self.hands_cross_threshold)
+        else:
+            hands_crossed = False
+            self.eye_dist = 0.1  # 제로 디비전 방지
         
         # 각 손과 눈 사이의 최소 거리 계산
         left_hand_dist = min(
@@ -179,6 +189,6 @@ class PoseAnalyzer:
         return {
             'body_tilt': (tilt, tilt_msg),
             'head_tilt': (head_tilt, head_tilt_msg),
-            'wrong_distance': (wrong_dist, dist_msg),
+            'wrong_distance': (False, ''),
             'gesture': (gesture, gesture_msg)
         }

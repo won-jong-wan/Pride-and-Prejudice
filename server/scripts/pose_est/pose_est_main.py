@@ -5,6 +5,7 @@ import time
 from collections import deque
 from functools import partial
 from .pose_analyzer_kalman import KalmanPoseAnalyzer
+from .pose_analyzer import PoseAnalyzer
 from .pose_logger import create_pose_logger
 
 import signal
@@ -106,7 +107,7 @@ class MSPNPostProcessor:
 
 class RealtimePoseEstimation:
     def __init__(self, hef_path, camera_device='/dev/video0', 
-                 input_size=(192, 256), conf_threshold=0.3, batch_size=4):
+                 input_size=(192, 256), conf_threshold=0.3, batch_size=4, filtered=False):
         """
         실시간 Pose Estimation 클래스 (Async API)
         
@@ -121,11 +122,14 @@ class RealtimePoseEstimation:
         self.conf_threshold = conf_threshold
         self.batch_size = batch_size
         self.timeout_ms = 10000
+        self.filtered = filtered
         
         # Hailo 초기화
         print("Initializing Hailo device...")
         params = VDevice.create_params()
         params.scheduling_algorithm = HailoSchedulingAlgorithm.ROUND_ROBIN
+        params.group_id = "SHARED"
+        params.multi_process_service = True
         
         self.vdevice = VDevice(params)
         
@@ -150,7 +154,7 @@ class RealtimePoseEstimation:
         if not self.cap.isOpened():
             # 카메라 열기 실패 시 다른 인덱스 시도
             print(f"Failed to open {camera_device}, trying /dev/video1...")
-            self.cap = cv2.VideoCapture('/dev/video1')
+            # self.cap = cv2.VideoCapture('/dev/video1')
             
             if not self.cap.isOpened():
                 print("Warning: No camera found. Will try to continue anyway...")
@@ -168,13 +172,20 @@ class RealtimePoseEstimation:
         # 결과 저장용
         self.latest_result = None
         self.result_ready = False
+
+        if self.filtered:
+            self.pose_analyzer = KalmanPoseAnalyzer(
+                window_size=45,           # 이동 평균 윈도우 크기 증가
+                process_noise=0.001,      # 프로세스 노이즈 대폭 감소 (더 부드럽게)
+                measurement_noise=0.7     # 측정 노이즈 증가 (갑작스러운 변화 무시)
+            )
+        else:
+            self.pose_analyzer = PoseAnalyzer(
+                window_size=45,           # 이동 평균 윈도우 크기 증가
+            )
         
         # Pose Analyzer 초기화 (Kalman Filter 적용)
-        self.pose_analyzer = KalmanPoseAnalyzer(
-            window_size=45,           # 이동 평균 윈도우 크기 증가
-            process_noise=0.001,      # 프로세스 노이즈 대폭 감소 (더 부드럽게)
-            measurement_noise=0.7     # 측정 노이즈 증가 (갑작스러운 변화 무시)
-        )
+        
         
         # 카메라 FPS 확인
         camera_fps = int(self.cap.get(cv2.CAP_PROP_FPS))
@@ -311,7 +322,7 @@ class RealtimePoseEstimation:
                     bindings = configured_infer_model.create_bindings()
                     bindings.input().set_buffer(input_data)
                     bindings.output().set_buffer(
-                        np.empty(self.infer_model.output().shape).astype(np.uint8)
+                        np.zeros(self.infer_model.output().shape, dtype=np.uint8)
                     )
                     
                     # 비동기 파이프라인 준비 대기
@@ -400,6 +411,8 @@ def main():
                        help='Model input height (default: 256)')
     parser.add_argument('--batch', type=int, default=1,
                        help='Batch size (default: 1)')
+    parser.add_argument('--filtered', type=bool, default=False,
+                       help='Use Kalman filter for pose smoothing')
     
     args = parser.parse_args()
     
@@ -409,7 +422,8 @@ def main():
         camera_device=args.camera,
         input_size=(args.width, args.height),
         conf_threshold=args.conf,
-        batch_size=args.batch
+        batch_size=args.batch,
+        filtered=args.filtered
     )
     
     pose_estimator.run()
