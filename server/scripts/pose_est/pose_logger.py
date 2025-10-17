@@ -110,7 +110,7 @@ class PoseDataLogger:
         """XML 파일 저장"""
         tree = ET.ElementTree(self.root)
         tree.write(self.filename, encoding="utf-8", xml_declaration=True)
-        tree.write(os.path.join(os.path.dirname(self.filename), "log.xml"), encoding="utf-8", xml_declaration=True)
+        tree.write(os.path.join(os.path.dirname(self.filename), "p_log.xml"), encoding="utf-8", xml_declaration=True)
     
     def close(self):
         """세션 종료 및 최종 저장"""

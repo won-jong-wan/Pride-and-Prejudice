@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 class SCRFDDecoder:
-    def __init__(self, input_size=640, original_size=None):
+    def __init__(self, input_size=640, original_size=None, distance_scale=16.0):
         # Feature pyramid strides
         self.strides = [8, 16, 32]
         self.feature_maps = [(80, 80), (40, 40), (20, 20)]
@@ -10,6 +10,10 @@ class SCRFDDecoder:
         # UINT8 quantization parameters (모델에 따라 조정 필요)
         self.score_scale = 1.0 / 255.0
         self.bbox_scale = 1.0 / 255.0
+        
+        # Distance scaling factor (중요!)
+        # 기본값 16.0, bbox가 너무 작으면 증가, 너무 크면 감소
+        self.distance_scale = distance_scale
         
         # Aspect ratio correction
         self.input_size = input_size
@@ -92,8 +96,10 @@ class SCRFDDecoder:
         # Extract bbox distances (첫 4채널 사용, 나머지 4채널은 refinement)
         bbox_distances = bboxes_raw[indices[:, 0], indices[:, 1], :4]
         
-        # Distance format을 실제 거리로 변환 (stride 스케일 적용)
-        bbox_distances = bbox_distances * stride * 4  # 일반적인 스케일 factor
+        # Distance format을 실제 거리로 변환
+        # stride * distance_scale이 핵심 파라미터
+        # UINT8 (0-255)를 픽셀 거리로 변환
+        bbox_distances = bbox_distances * self.distance_scale
         
         # Convert to bbox format [x1, y1, x2, y2]
         bboxes = self.distance2bbox(anchor_centers, bbox_distances, stride)
@@ -249,12 +255,20 @@ def example_usage():
         'conv39': np.random.randint(0, 255, (20, 20, 8), dtype=np.uint8),
     }
     
-    # ===== 방법 1: Aspect ratio 보정 (후처리) =====
-    # 640x480 이미지가 640x640으로 stretch된 경우
+    # ===== Distance Scale 조정이 핵심 =====
+    # distance_scale 값에 따른 bbox 크기 변화:
+    # - 4.0: 매우 작은 bbox (코/입만)
+    # - 8.0: 작은 bbox
+    # - 16.0: 보통 bbox (기본값)
+    # - 32.0: 큰 bbox
+    # - 64.0: 매우 큰 bbox
+    
     decoder = SCRFDDecoder(
         input_size=640,
-        original_size=(640, 480)  # (width, height)
+        original_size=(640, 480),  # (width, height)
+        distance_scale=16.0  # ⭐ 이 값을 조정하세요!
     )
+    
     bboxes, scores = decoder.detect(
         outputs, 
         conf_threshold=0.5,
@@ -262,8 +276,10 @@ def example_usage():
     )
     
     print(f"검출된 얼굴 수: {len(bboxes)}")
+    debug_bbox_sizes(bboxes)
+    
     for i, (bbox, score) in enumerate(zip(bboxes, scores)):
-        x1, y1, x2, y2 = bbox
+        x1, y1, x2, y2 = bbox #y2 -> y, x1 -> x
         w, h = x2 - x1, y2 - y1
         print(f"Face {i}: pos=({x1:.1f}, {y1:.1f}), size=({w:.1f}x{h:.1f}), score={score:.3f}")
     
@@ -276,6 +292,41 @@ def example_usage():
     #                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
     # cv2.imshow('Detection Result', img)
     # cv2.waitKey(0)
+
+
+def find_optimal_distance_scale(outputs, target_bbox_size=(80, 120)):
+    """
+    최적의 distance_scale 값을 찾기 위한 테스트 함수
+    
+    Args:
+        outputs: 모델 출력
+        target_bbox_size: 목표 bbox 크기 (width, height)
+    """
+    scales_to_test = [4.0, 8.0, 12.0, 16.0, 24.0, 32.0, 48.0, 64.0]
+    
+    print("Testing different distance_scale values:")
+    print("=" * 60)
+    
+    for scale in scales_to_test:
+        decoder = SCRFDDecoder(
+            input_size=640,
+            original_size=(640, 480),
+            distance_scale=scale
+        )
+        
+        bboxes, scores = decoder.detect(outputs, conf_threshold=0.3)
+        
+        if len(bboxes) > 0:
+            widths = bboxes[:, 2] - bboxes[:, 0]
+            heights = bboxes[:, 3] - bboxes[:, 1]
+            print(f"scale={scale:5.1f} → size: {widths.mean():.1f}x{heights.mean():.1f} "
+                  f"({len(bboxes)} detections)")
+        else:
+            print(f"scale={scale:5.1f} → No detections")
+    
+    print("=" * 60)
+    print(f"Target size: {target_bbox_size[0]}x{target_bbox_size[1]}")
+    print("Choose the scale that produces bbox size closest to your target.")
 
 
 def debug_bbox_sizes(bboxes):
@@ -294,11 +345,20 @@ def debug_bbox_sizes(bboxes):
     print(f"Area   - min: {areas.min():.1f}, max: {areas.max():.1f}, mean: {areas.mean():.1f}")
     print(f"Aspect ratio - mean: {(widths/heights).mean():.2f}")
     
-    # 작은 bbox 경고
-    small_bboxes = (widths < 20) | (heights < 20)
-    if np.any(small_bboxes):
-        print(f"\n⚠️  Warning: {small_bboxes.sum()} bboxes are too small (< 20px)")
-        print("Consider adjusting distance_scale_factor in decode_single_level")
+    # 크기 평가
+    avg_width = widths.mean()
+    avg_height = heights.mean()
+    
+    print("\n=== Size Evaluation ===")
+    if avg_width < 60 or avg_height < 80:
+        print("❌ Bboxes are TOO SMALL (catching only nose/mouth)")
+        print(f"   → Increase distance_scale (try {16.0 * 80 / avg_height:.1f})")
+    elif avg_width > 150 or avg_height > 200:
+        print("❌ Bboxes are TOO LARGE (including too much background)")
+        print(f"   → Decrease distance_scale (try {16.0 * 120 / avg_height:.1f})")
+    else:
+        print("✅ Bbox sizes look reasonable!")
+        print(f"   Current distance_scale seems appropriate")
 
 if __name__ == "__main__":
     example_usage()

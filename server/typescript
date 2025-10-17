@@ -1,0 +1,869 @@
+Script started on 2025-10-17 10:37:05+09:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="112" LINES="24"]
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m sudo halt -ps[Kcd se
+[?2004lbash: cd: se: No such file or directory
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m cd ser[K[K[K[K[K[Kls
+[?2004l[0m[01;34menv[0m     hailort.log  [01;34m__pycache__[0m  run_fa.sh   run_pal.sh  [01;34mscripts[0m    [01;34msrv_tmp[0m
+[01;32menv.sh[0m  [01;34mmodels[0m       [01;34mrefs[0m         run_mul.sh  run.sh      server.sh  typescript
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m cd[K[Kcd scripts/
+[?2004l[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server/scripts[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server/scripts $[00m ls
+[?2004l[0m[01;34mface_est[0m  [01;34mgstreamer[0m  __init__.py  [01;34mparallel[0m  [01;34mpose_est[0m  process_call.py  [01;34m__pycache__[0m  server.py
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server/scripts[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server/scripts $[00m cd pis[K[K[Kgstreamer/
+[?2004l[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server/scripts/gstreamer[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server/scripts/gstreamer $[00m ls
+[?2004l__init__.py  out.raw  [0m[01;34m__pycache__[0m  recorder.py  rtsp.py  rtsp_test.py
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server/scripts/gstreamer[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server/scripts/gstreamer $[00m python recorder.py
+[?2004lrecording... (Ctrl+C to stop)
+error: gst-resource-error-quark: Could not open file "srv_tmp/wav/audio.wav" for writing. (6), ../plugins/elements/gstfilesink.c(458): gst_file_sink_open_file (): /GstPipeline:pipeline0/GstFileSink:filesink1:
+system error: No such file or directory
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server/scripts/gstreamer[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server/scripts/gstreamer $[00m cd ..
+[?2004l[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server/scripts[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server/scripts $[00m cd ..
+[?2004l[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m python scripts.gstreamer.recorder[C-scripts.gstreamer.recordermscripts.gstreamer.recorder scripts.gstreamer.recorder
+[?2004lrecording... (Ctrl+C to stop)
+^C
+stopping recording...
+recording finished.
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m python -m scripts.gstreamer.recorder
+[?2004lrecording... (Ctrl+C to stop)
+^C
+stopping recording...
+recording finished.
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m python -m scripts.gstreamer.recordercd ..[Kpython recorder.pyls[Kcd gstreamer/ls[Kcd scripts/ls[Kcd sesudo halt -psbash server.sh [10Pcd ..bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 10:39:41] "GET /command/start_record HTTP/1.1" 200 -
+[48;5;0m[38;5;207m[rtsp @ 0x3d404b0] [0m[48;5;0m[38;5;196mmethod DESCRIBE failed: 503 Service Unavailable
+[0m^[[A^C/home/pi/Codes/Pride-and-Prejudice/server/scripts/gstreamer/rtsp.py:176: Warning: g_source_remove: assertion 'tag > 0' failed
+  GLib.source_remove(self.server_id)
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 10:41:12] "GET /command/start_record HTTP/1.1" 200 -
+[48;5;0m[38;5;207m[rtsp @ 0xeb504b0] [0m[48;5;0m[38;5;196mmethod DESCRIBE failed: 503 Service Unavailable
+[0m^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 10:41:59] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m [7mvlc rtsp://localhost:8554/test[27mvlc rtsp://localhost:8554/test
+[?2004lVLC media player 3.0.21 Vetinari (revision 3.0.21-0-gdd8bfdbabe8)
+[[32;1m0000555626cb5560[0m] main libvlc: [0;1mRunning vlc with the default interface. Use 'cvlc' to use vlc without interface.[0m
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7fff2003a7d0] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7fff2003a7d0] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007fff20015a20[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7fff2003a7d0] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7fff2003a7d0] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007fff20015a20[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[[32;1m00007fff040013f0[0m] wl_dmabuf vout display: [0;1m<<< Open: J420 368x642(360x640 @ 0,0 0/0), cfg.display: 360x640, source: 368x642(360x640 @ 0,0 1/1), scale=65536/65536[0m
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m vlc rtsp://localhost:8554/test
+[?2004lVLC media player 3.0.21 Vetinari (revision 3.0.21-0-gdd8bfdbabe8)
+[[32;1m0000555639d31560[0m] main libvlc: [0;1mRunning vlc with the default interface. Use 'cvlc' to use vlc without interface.[0m
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffebc03ac70] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffebc03ac70] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007ffebc016040[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffebc03ac70] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffebc03ac70] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007ffebc016040[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[[32;1m00007ffea00013f0[0m] wl_dmabuf vout display: [0;1m<<< Open: J420 368x642(360x640 @ 0,0 0/0), cfg.display: 360x640, source: 368x642(360x640 @ 0,0 1/1), scale=65536/65536[0m
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m vlc rtsp://localhost:8554/test
+[?2004lVLC media player 3.0.21 Vetinari (revision 3.0.21-0-gdd8bfdbabe8)
+[[32;1m00005555d2695560[0m] main libvlc: [0;1mRunning vlc with the default interface. Use 'cvlc' to use vlc without interface.[0m
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffe8403a670] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffe8403a670] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007ffe84015850[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffe8403a670] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffe8403a670] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007ffe84015850[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[[32;1m00007ffe680013f0[0m] wl_dmabuf vout display: [0;1m<<< Open: J420 368x642(360x640 @ 0,0 0/0), cfg.display: 360x640, source: 368x642(360x640 @ 0,0 1/1), scale=65536/65536[0m
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m vlc rtsp://localhost:8554/test
+[?2004lVLC media player 3.0.21 Vetinari (revision 3.0.21-0-gdd8bfdbabe8)
+[[32;1m0000555655649560[0m] main libvlc: [0;1mRunning vlc with the default interface. Use 'cvlc' to use vlc without interface.[0m
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffeec03ad90] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffeec03ad90] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007ffeec0160f0[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffeec03ad90] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7ffeec03ad90] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007ffeec0160f0[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[[32;1m00007ffed00013f0[0m] wl_dmabuf vout display: [0;1m<<< Open: J420 368x642(360x640 @ 0,0 0/0), cfg.display: 360x640, source: 368x642(360x640 @ 0,0 1/1), scale=65536/65536[0m
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m vlc rtsp://localhost:8554/test
+[?2004lVLC media player 3.0.21 Vetinari (revision 3.0.21-0-gdd8bfdbabe8)
+[[32;1m00005555aabe5560[0m] main libvlc: [0;1mRunning vlc with the default interface. Use 'cvlc' to use vlc without interface.[0m
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+QStandardPaths: wrong permissions on runtime directory /run/user/1000, 0770 instead of 0700
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7fff4403a5c0] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7fff4403a5c0] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007fff44015970[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7fff4403a5c0] [0m[48;5;0m[38;5;196mCould not find a valid device
+[0m[48;5;0m[38;5;39m[h264_v4l2m2m @ 0x7fff4403a5c0] [0m[48;5;0m[38;5;196mcan't configure decoder
+[0m[[32;1m00007fff44015970[0m] avcodec decoder error: [31;1mcannot start codec (h264_v4l2m2m)[0m
+[[32;1m00007fff1c0013f0[0m] wl_dmabuf vout display: [0;1m<<< Open: J420 368x642(360x640 @ 0,0 0/0), cfg.display: 360x640, source: 368x642(360x640 @ 0,0 1/1), scale=65536/65536[0m
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m vlc rtsp://localhost:8554/test[15Pbash server.sh python -m scripts.gstreamer.recorder[21Pbash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 10:50:24] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:145: RuntimeWarning: divide by zero encountered in scalar divide
+  abs(left_wrist[1] - right_wrist[1])/self.eye_dist > self.hands_cross_threshold)
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:145: RuntimeWarning: invalid value encountered in scalar divide
+  abs(left_wrist[1] - right_wrist[1])/self.eye_dist > self.hands_cross_threshold)
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:163: RuntimeWarning: divide by zero encountered in scalar divide
+  elif left_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:166: RuntimeWarning: divide by zero encountered in scalar divide
+  elif right_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:124: RuntimeWarning: divide by zero encountered in scalar divide
+  d_s2e = max(left_s2e, right_s2e)/min(left_s2e, right_s2e)
+'stop_record' command received.
+>> stop recording!
+10.10.14.50 - - [17/Oct/2025 10:51:14] "GET /command/stop_record HTTP/1.1" 200 -
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/gstreamer/rtsp.py:176: Warning: g_source_remove: assertion 'tag > 0' failed
+  GLib.source_remove(self.server_id)
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh vlc rtsp://localhost:8554/test[15Pbash server.sh python -m scripts.gstreamer.recordercd ..[Kpython recorder.pyls[Kcd gstreamer/ls[Kcd scripts/ls[Kcd sesudo halt -psbash server.sh [10Pcd ..vi process_call.py [6Pserver[C[C[C[C[6@process_call[C[C[C[C[6Pserver[C[C[C[Cls[Kcd scripts/ls[Kbash server.sh source env/bin/activatecd Pride-and-Prejudice/server/ls[Kcd Codes/bash server.sh[1Psource env.shls[Kcd ..vi process_call.py [6Pserver[C[C[C[Cls[Kcd scripts/[K[2Plscd server/ls[Kcd Pride-and-Prejudice/ls[Kcd Codes/ls[Kbash server.sh ls[Kbash server.sh [1P[1P[1P[1P[1P[1P[1P[1@ [1@r[1@u[1@n
+[?2004lInitializing Hailo device...
+Loading model: models/vit_pose_small.hef
+Opening camera: rtsp://127.0.0.1:8554/test
+Created new pose log file: /home/pi/Codes/Pride-and-Prejudice/server/srv_tmp/xml/pose_log_20251017_105208.xml
+Initialization complete! Camera FPS: 30
+
+Starting real-time pose estimation...
+Press 'q' to quit
+
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+86.96768886345089
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:124: RuntimeWarning: divide by zero encountered in scalar divide
+  d_s2e = max(left_s2e, right_s2e)/min(left_s2e, right_s2e)
+^C
+Interrupted by user
+
+Cleaning up...
+
+Pose log saved to: /home/pi/Codes/Pride-and-Prejudice/server/srv_tmp/xml/pose_log_20251017_105208.xml
+Session duration: 20.9 seconds
+Done!
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash run.sh [K[7mgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test ! \[27m
+[7m  rtph264depay ! h264parse ! avdec_h264 ! \[27m
+[7m  fpsdisplaysink video-sink=autovideosink text-overlay=true[27m[A[Agst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test ! \
+  rtph264depay ! h264parse ! avdec_h264 ! \
+  fpsdisplaysink video-sink=autovideosink text-overlay=true
+[?2004lSetting pipeline to PAUSED ...
+Pipeline is live and does not need PREROLL ...
+Progress: (open) Opening Stream
+Pipeline is PREROLLED ...
+Prerolled, waiting for progress to finish...
+Progress: (connect) Connecting to rtsp://localhost:8554/test
+Progress: (open) Retrieving server options
+Progress: (open) Retrieving media info
+Progress: (request) SETUP stream 0
+Progress: (request) SETUP stream 1
+Progress: (open) Opened Stream
+Setting pipeline to PLAYING ...
+New clock: GstSystemClock
+Progress: (request) Sending PLAY request
+Redistribute latency...
+Redistribute latency...
+Progress: (request) Sending PLAY request
+Redistribute latency...
+Redistribute latency...
+Progress: (request) Sent PLAY request
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+0:00:00.0 / 99:99:99.Redistribute latency...
+0:00:00.0 / 99:99:99.Redistribute latency...
+0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.1 / 99:99:99.Redistribute latency...
+0:00:00.2 / 99:99:99.0:00:00.3 / 99:99:99.^Chandling interrupt.
+Interrupt: Stopping pipeline ...
+Execution ended after 0:00:02.401576133
+Setting pipeline to NULL ...
+Freeing pipeline ...
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true
+[?2004lSetting pipeline to PAUSED ...
+Pipeline is live and does not need PREROLL ...
+Progress: (open) Opening Stream
+Pipeline is PREROLLED ...
+Prerolled, waiting for progress to finish...
+Progress: (connect) Connecting to rtsp://localhost:8554/test
+Progress: (open) Retrieving server options
+Progress: (open) Retrieving media info
+Progress: (request) SETUP stream 0
+Progress: (request) SETUP stream 1
+Progress: (open) Opened Stream
+Setting pipeline to PLAYING ...
+New clock: GstSystemClock
+Progress: (request) Sending PLAY request
+Redistribute latency...
+Redistribute latency...
+Progress: (request) Sending PLAY request
+Redistribute latency...
+Redistribute latency...
+Progress: (request) Sent PLAY request
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+0:00:00.0 / 99:99:99.Redistribute latency...
+0:00:00.0 / 99:99:99.Redistribute latency...
+0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.Redistribute latency...
+0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.1 / 99:99:99.0:00:00.2 / 99:99:99.0:00:00.3 / 99:99:99.0:00:00.4 / 99:99:99.0:00:00.5 / 99:99:99.0:00:00.6 / 99:99:99.0:00:00.7 / 99:99:99.0:00:00.8 / 99:99:99.0:00:00.9 / 99:99:99.0:00:01.0 / 99:99:99.0:00:01.1 / 99:99:99.0:00:01.2 / 99:99:99.0:00:01.3 / 99:99:99.0:00:01.4 / 99:99:99.0:00:01.5 / 99:99:99.0:00:01.6 / 99:99:99.0:00:01.7 / 99:99:99.0:00:01.8 / 99:99:99.0:00:01.9 / 99:99:99.0:00:02.0 / 99:99:99.0:00:02.1 / 99:99:99.0:00:02.2 / 99:99:99.0:00:02.3 / 99:99:99.0:00:02.4 / 99:99:99.0:00:02.5 / 99:99:99.0:00:02.6 / 99:99:99.0:00:02.7 / 99:99:99.0:00:02.8 / 99:99:99.0:00:02.9 / 99:99:99.0:00:03.0 / 99:99:99.0:00:03.1 / 99:99:99.0:00:03.2 / 99:99:99.0:00:03.3 / 99:99:99.0:00:03.4 / 99:99:99.0:00:03.5 / 99:99:99.0:00:03.6 / 99:99:99.0:00:03.7 / 99:99:99.0:00:03.8 / 99:99:99.0:00:03.9 / 99:99:99.0:00:04.0 / 99:99:99.0:00:04.1 / 99:99:99.0:00:04.2 / 99:99:99.0:00:04.3 / 99:99:99.0:00:04.4 / 99:99:99.0:00:04.5 / 99:99:99.0:00:04.6 / 99:99:99.0:00:04.7 / 99:99:99.0:00:04.8 / 99:99:99.0:00:04.9 / 99:99:99.0:00:05.0 / 99:99:99.0:00:05.1 / 99:99:99.0:00:05.2 / 99:99:99.0:00:05.3 / 99:99:99.0:00:05.4 / 99:99:99.0:00:05.5 / 99:99:99.0:00:05.6 / 99:99:99.0:00:05.7 / 99:99:99.0:00:05.8 / 99:99:99.0:00:05.9 / 99:99:99.0:00:06.0 / 99:99:99.0:00:06.1 / 99:99:99.0:00:06.2 / 99:99:99.0:00:06.3 / 99:99:99.0:00:06.4 / 99:99:99.0:00:06.5 / 99:99:99.0:00:06.6 / 99:99:99.0:00:06.7 / 99:99:99.0:00:06.8 / 99:99:99.0:00:06.9 / 99:99:99.0:00:07.0 / 99:99:99.0:00:07.1 / 99:99:99.0:00:07.2 / 99:99:99.0:00:07.3 / 99:99:99.0:00:07.4 / 99:99:99.0:00:07.5 / 99:99:99.0:00:07.6 / 99:99:99.0:00:07.7 / 99:99:99.0:00:07.8 / 99:99:99.0:00:07.9 / 99:99:99.0:00:08.0 / 99:99:99.0:00:08.1 / 99:99:99.0:00:08.2 / 99:99:99.0:00:08.3 / 99:99:99.0:00:08.4 / 99:99:99.0:00:08.5 / 99:99:99.0:00:08.6 / 99:99:99.0:00:08.7 / 99:99:99.0:00:08.8 / 99:99:99.0:00:08.9 / 99:99:99.0:00:09.0 / 99:99:99.0:00:09.1 / 99:99:99.0:00:09.2 / 99:99:99.0:00:09.3 / 99:99:99.0:00:09.4 / 99:99:99.0:00:09.5 / 99:99:99.0:00:09.6 / 99:99:99.0:00:09.7 / 99:99:99.0:00:09.8 / 99:99:99.0:00:09.9 / 99:99:99.0:00:10.0 / 99:99:99.0:00:10.1 / 99:99:99.0:00:10.2 / 99:99:99.0:00:10.3 / 99:99:99.0:00:10.4 / 99:99:99.0:00:10.5 / 99:99:99.0:00:10.6 / 99:99:99.0:00:10.7 / 99:99:99.0:00:10.8 / 99:99:99.0:00:10.9 / 99:99:99.0:00:11.0 / 99:99:99.0:00:11.1 / 99:99:99.0:00:11.2 / 99:99:99.0:00:11.3 / 99:99:99.0:00:11.4 / 99:99:99.0:00:11.5 / 99:99:99.0:00:11.6 / 99:99:99.0:00:11.7 / 99:99:99.0:00:11.8 / 99:99:99.0:00:11.9 / 99:99:99.0:00:12.0 / 99:99:99.0:00:12.1 / 99:99:99.0:00:12.2 / 99:99:99.0:00:12.3 / 99:99:99.0:00:12.4 / 99:99:99.0:00:12.5 / 99:99:99.0:00:12.7 / 99:99:99.0:00:12.8 / 99:99:99.0:00:12.9 / 99:99:99.0:00:13.0 / 99:99:99.0:00:13.1 / 99:99:99.0:00:13.2 / 99:99:99.0:00:13.3 / 99:99:99.0:00:13.4 / 99:99:99.0:00:13.5 / 99:99:99.0:00:13.6 / 99:99:99.0:00:13.7 / 99:99:99.0:00:13.8 / 99:99:99.0:00:13.9 / 99:99:99.0:00:14.0 / 99:99:99.0:00:14.1 / 99:99:99.0:00:14.2 / 99:99:99.0:00:14.3 / 99:99:99.0:00:14.4 / 99:99:99.0:00:14.5 / 99:99:99.0:00:14.6 / 99:99:99.0:00:14.7 / 99:99:99.0:00:14.8 / 99:99:99.0:00:14.9 / 99:99:99.0:00:15.0 / 99:99:99.0:00:15.1 / 99:99:99.0:00:15.2 / 99:99:99.0:00:15.3 / 99:99:99.0:00:15.4 / 99:99:99.0:00:15.5 / 99:99:99.0:00:15.6 / 99:99:99.0:00:15.7 / 99:99:99.0:00:15.8 / 99:99:99.0:00:15.9 / 99:99:99.0:00:16.0 / 99:99:99.0:00:16.1 / 99:99:99.0:00:16.2 / 99:99:99.0:00:16.3 / 99:99:99.0:00:16.4 / 99:99:99.0:00:16.5 / 99:99:99.0:00:16.6 / 99:99:99.0:00:16.7 / 99:99:99.0:00:16.8 / 99:99:99.0:00:16.9 / 99:99:99.0:00:17.0 / 99:99:99.0:00:17.1 / 99:99:99.0:00:17.2 / 99:99:99.0:00:17.3 / 99:99:99.0:00:17.4 / 99:99:99.0:00:17.5 / 99:99:99.0:00:17.6 / 99:99:99.0:00:17.7 / 99:99:99.0:00:17.8 / 99:99:99.0:00:17.9 / 99:99:99.0:00:18.0 / 99:99:99.0:00:18.1 / 99:99:99.0:00:18.2 / 99:99:99.0:00:18.3 / 99:99:99.0:00:18.4 / 99:99:99.0:00:18.5 / 99:99:99.0:00:18.6 / 99:99:99.0:00:18.7 / 99:99:99.0:00:18.8 / 99:99:99.0:00:18.9 / 99:99:99.0:00:19.0 / 99:99:99.0:00:19.1 / 99:99:99.0:00:19.2 / 99:99:99.0:00:19.3 / 99:99:99.0:00:19.4 / 99:99:99.0:00:19.5 / 99:99:99.0:00:19.6 / 99:99:99.0:00:19.7 / 99:99:99.0:00:19.8 / 99:99:99.0:00:19.9 / 99:99:99.0:00:20.0 / 99:99:99.0:00:20.1 / 99:99:99.0:00:20.2 / 99:99:99.0:00:20.3 / 99:99:99.0:00:20.4 / 99:99:99.0:00:20.5 / 99:99:99.0:00:20.6 / 99:99:99.0:00:20.7 / 99:99:99.0:00:20.8 / 99:99:99.0:00:20.9 / 99:99:99.0:00:21.0 / 99:99:99.0:00:21.1 / 99:99:99.^Chandling interrupt.
+Interrupt: Stopping pipeline ...
+Execution ended after 0:00:23.209698280
+Setting pipeline to NULL ...
+Freeing pipeline ...
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash run.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash run.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash run.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[3@server[C[C[C[C
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 10:58:38] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+^C/home/pi/Codes/Pride-and-Prejudice/server/scripts/gstreamer/rtsp.py:178: Warning: g_source_remove: assertion 'tag > 0' failed
+  GLib.source_remove(self.server_id)
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true
+[?2004lSetting pipeline to PAUSED ...
+Pipeline is live and does not need PREROLL ...
+Progress: (open) Opening Stream
+Pipeline is PREROLLED ...
+Prerolled, waiting for progress to finish...
+Progress: (connect) Connecting to rtsp://localhost:8554/test
+Progress: (open) Retrieving server options
+Progress: (open) Retrieving media info
+Progress: (request) SETUP stream 0
+Progress: (request) SETUP stream 1
+Progress: (open) Opened Stream
+Setting pipeline to PLAYING ...
+New clock: GstSystemClock
+Progress: (request) Sending PLAY request
+Redistribute latency...
+Redistribute latency...
+Progress: (request) Sending PLAY request
+Redistribute latency...
+Redistribute latency...
+Progress: (request) Sent PLAY request
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+0:00:00.0 / 99:99:99.Redistribute latency...
+0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.1 / 99:99:99.0:00:00.2 / 99:99:99.0:00:00.3 / 99:99:99.0:00:00.4 / 99:99:99.0:00:00.5 / 99:99:99.0:00:00.6 / 99:99:99.0:00:00.7 / 99:99:99.0:00:00.8 / 99:99:99.0:00:00.9 / 99:99:99.Redistribute latency...
+0:00:01.0 / 99:99:99.0:00:01.1 / 99:99:99.0:00:01.2 / 99:99:99.0:00:01.3 / 99:99:99.0:00:01.4 / 99:99:99.0:00:01.5 / 99:99:99.0:00:01.6 / 99:99:99.0:00:01.7 / 99:99:99.0:00:01.8 / 99:99:99.0:00:01.9 / 99:99:99.0:00:02.0 / 99:99:99.0:00:02.1 / 99:99:99.0:00:02.2 / 99:99:99.0:00:02.3 / 99:99:99.0:00:02.4 / 99:99:99.0:00:02.5 / 99:99:99.0:00:02.6 / 99:99:99.0:00:02.7 / 99:99:99.0:00:02.8 / 99:99:99.0:00:02.9 / 99:99:99.0:00:03.0 / 99:99:99.0:00:03.1 / 99:99:99.0:00:03.2 / 99:99:99.0:00:03.3 / 99:99:99.0:00:03.4 / 99:99:99.0:00:03.5 / 99:99:99.0:00:03.6 / 99:99:99.^Chandling interrupt.
+Interrupt: Stopping pipeline ...
+Execution ended after 0:00:05.781085127
+Setting pipeline to NULL ...
+Freeing pipeline ...
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash server.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 10:59:37] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+^C/home/pi/Codes/Pride-and-Prejudice/server/scripts/gstreamer/rtsp.py:176: Warning: g_source_remove: assertion 'tag > 0' failed
+  GLib.source_remove(self.server_id)
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:00:07] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+^C/home/pi/Codes/Pride-and-Prejudice/server/scripts/gstreamer/rtsp.py:176: Warning: g_source_remove: assertion 'tag > 0' failed
+  GLib.source_remove(self.server_id)
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ffplay /dev/device0
+[?2004lffplay version 5.1.7-0+deb12u1+rpt1 Copyright (c) 2003-2025 the FFmpeg developers
+  built with gcc 12 (Debian 12.2.0-14+deb12u1)
+  configuration: --prefix=/usr --extra-version=0+deb12u1+rpt1 --toolchain=hardened --incdir=/usr/include/aarch64-linux-gnu --enable-gpl --disable-stripping --disable-mmal --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librist --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sand --enable-sdl2 --disable-sndio --enable-libjxl --enable-neon --enable-v4l2-request --enable-libudev --enable-epoxy --libdir=/usr/lib/aarch64-linux-gnu --arch=arm64 --enable-pocketsphinx --enable-librsvg --enable-libdc1394 --enable-libdrm --enable-vout-drm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-libplacebo --enable-librav1e --enable-shared
+  libavutil      57. 28.100 / 57. 28.100
+  libavcodec     59. 37.100 / 59. 37.100
+  libavformat    59. 27.100 / 59. 27.100
+  libavdevice    59.  7.100 / 59.  7.100
+  libavfilter     8. 44.100 /  8. 44.100
+  libswscale      6.  7.100 /  6.  7.100
+  libswresample   4.  7.100 /  4.  7.100
+  libpostproc    56.  6.100 / 56.  6.100
+[48;5;0m[38;5;196m/dev/device0: No such file or directory
+[0m    nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ffplay /dev/device0
+[?2004lffplay version 5.1.7-0+deb12u1+rpt1 Copyright (c) 2003-2025 the FFmpeg developers
+  built with gcc 12 (Debian 12.2.0-14+deb12u1)
+  configuration: --prefix=/usr --extra-version=0+deb12u1+rpt1 --toolchain=hardened --incdir=/usr/include/aarch64-linux-gnu --enable-gpl --disable-stripping --disable-mmal --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librist --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sand --enable-sdl2 --disable-sndio --enable-libjxl --enable-neon --enable-v4l2-request --enable-libudev --enable-epoxy --libdir=/usr/lib/aarch64-linux-gnu --arch=arm64 --enable-pocketsphinx --enable-librsvg --enable-libdc1394 --enable-libdrm --enable-vout-drm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-libplacebo --enable-librav1e --enable-shared
+  libavutil      57. 28.100 / 57. 28.100
+  libavcodec     59. 37.100 / 59. 37.100
+  libavformat    59. 27.100 / 59. 27.100
+  libavdevice    59.  7.100 / 59.  7.100
+  libavfilter     8. 44.100 /  8. 44.100
+  libswscale      6.  7.100 /  6.  7.100
+  libswresample   4.  7.100 /  4.  7.100
+  libpostproc    56.  6.100 / 56.  6.100
+[48;5;0m[38;5;196m/dev/device0: No such file or directory
+[0m    nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ffplay /dev/device0[1P0[1P0[1P0[1P0[1P0[1P0v0e0[1P0i0d0e0o0
+[?2004lffplay version 5.1.7-0+deb12u1+rpt1 Copyright (c) 2003-2025 the FFmpeg developers
+  built with gcc 12 (Debian 12.2.0-14+deb12u1)
+  configuration: --prefix=/usr --extra-version=0+deb12u1+rpt1 --toolchain=hardened --incdir=/usr/include/aarch64-linux-gnu --enable-gpl --disable-stripping --disable-mmal --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librist --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sand --enable-sdl2 --disable-sndio --enable-libjxl --enable-neon --enable-v4l2-request --enable-libudev --enable-epoxy --libdir=/usr/lib/aarch64-linux-gnu --arch=arm64 --enable-pocketsphinx --enable-librsvg --enable-libdc1394 --enable-libdrm --enable-vout-drm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-libplacebo --enable-librav1e --enable-shared
+  libavutil      57. 28.100 / 57. 28.100
+  libavcodec     59. 37.100 / 59. 37.100
+  libavformat    59. 27.100 / 59. 27.100
+  libavdevice    59.  7.100 / 59.  7.100
+  libavfilter     8. 44.100 /  8. 44.100
+  libswscale      6.  7.100 /  6.  7.100
+  libswresample   4.  7.100 /  4.  7.100
+  libpostproc    56.  6.100 / 56.  6.100
+[48;5;0m[38;5;207m[video4linux2,v4l2 @ 0x7fff54000c20] [0m[48;5;0m[38;5;196mCannot open video device /dev/video0: No such file or directory
+[0m[48;5;0m[38;5;196m/dev/video0: No such file or directory
+[0m    nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ffplay /dev/video0
+[?2004lffplay version 5.1.7-0+deb12u1+rpt1 Copyright (c) 2003-2025 the FFmpeg developers
+  built with gcc 12 (Debian 12.2.0-14+deb12u1)
+  configuration: --prefix=/usr --extra-version=0+deb12u1+rpt1 --toolchain=hardened --incdir=/usr/include/aarch64-linux-gnu --enable-gpl --disable-stripping --disable-mmal --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librist --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sand --enable-sdl2 --disable-sndio --enable-libjxl --enable-neon --enable-v4l2-request --enable-libudev --enable-epoxy --libdir=/usr/lib/aarch64-linux-gnu --arch=arm64 --enable-pocketsphinx --enable-librsvg --enable-libdc1394 --enable-libdrm --enable-vout-drm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-libplacebo --enable-librav1e --enable-shared
+  libavutil      57. 28.100 / 57. 28.100
+  libavcodec     59. 37.100 / 59. 37.100
+  libavformat    59. 27.100 / 59. 27.100
+  libavdevice    59.  7.100 / 59.  7.100
+  libavfilter     8. 44.100 /  8. 44.100
+  libswscale      6.  7.100 /  6.  7.100
+  libswresample   4.  7.100 /  4.  7.100
+  libpostproc    56.  6.100 / 56.  6.100
+    nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0       nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   Input #0, video4linux2,v4l2, from '/dev/video0':
+  Duration: N/A, start: 6839.622901, bitrate: N/A
+  Stream #0:0: Video: mjpeg (Baseline), yuvj422p(pc, bt470bg/unknown/unknown), 1280x720, 30 fps, 30 tbr, 1000k tbn
+[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041b7b50] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041b7b50] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041defd0] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041defd0] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff042037c0] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff042037c0] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04224870] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04224870] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04249060] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04249060] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041b7b50] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041b7b50] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff042208b0] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff042208b0] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041def90] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041def90] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04200040] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04200040] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04246270] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04246270] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041b7b50] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041b7b50] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff042208b0] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff042208b0] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041def90] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041def90] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04200040] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04200040] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04246270] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04246270] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041b7b50] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041b7b50] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff042208b0] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff042208b0] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041def90] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041def90] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04200040] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04200040] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04246270] [0m[48;5;0m[38;5;226mdeprecated pixel format used, make sure you did set range correctly
+[0m[48;5;0m[38;5;153m[swscaler @ 0x7fff041a9d60] [0m[48;5;0m[38;5;153m[swscaler @ 0x7fff04246270] [0m[48;5;0m[38;5;226mNo accelerated colorspace conversion found from yuv422p to rgba.
+[0m6839.65 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6839.69 M-V:  0.002 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6839.73 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6839.78 M-V:  0.014 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6839.82 M-V:  0.015 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6839.85 M-V:  0.007 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6839.90 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6839.93 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6839.96 M-V:  0.001 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6839.99 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.03 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.06 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.09 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.13 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.16 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.20 M-V:  0.001 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.23 M-V:  0.001 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.26 M-V:  0.001 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.29 M-V:  0.001 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.32 M-V:  0.001 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.35 M-V:  0.001 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.38 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.41 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.45 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.48 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.52 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.56 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.59 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.62 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.66 M-V:  0.001 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.69 M-V:  0.001 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.72 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.76 M-V:  0.002 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.79 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.82 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.86 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.89 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.92 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6840.96 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.00 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.03 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.06 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.09 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.12 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.16 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.19 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.22 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.26 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.29 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.32 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.36 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.39 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.43 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.46 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.49 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.53 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.56 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.60 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.64 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.67 M-V:  0.002 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.71 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.74 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.77 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.81 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.85 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.88 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.91 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.95 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6841.98 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6842.02 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6842.06 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   6842.09 M-V:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   ^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ffplay /dev/video0device0[4Pbash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:01:02] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:166: RuntimeWarning: divide by zero encountered in scalar divide
+  elif left_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:169: RuntimeWarning: divide by zero encountered in scalar divide
+  elif right_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:148: RuntimeWarning: divide by zero encountered in scalar divide
+  abs(left_wrist[1] - right_wrist[1])/self.eye_dist > self.hands_cross_threshold)
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:148: RuntimeWarning: invalid value encountered in scalar divide
+  abs(left_wrist[1] - right_wrist[1])/self.eye_dist > self.hands_cross_threshold)
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:01:44] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:148: RuntimeWarning: divide by zero encountered in scalar divide
+  abs(left_wrist[1] - right_wrist[1])/self.eye_dist > self.hands_cross_threshold)
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:148: RuntimeWarning: invalid value encountered in scalar divide
+  abs(left_wrist[1] - right_wrist[1])/self.eye_dist > self.hands_cross_threshold)
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:166: RuntimeWarning: divide by zero encountered in scalar divide
+  elif left_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:169: RuntimeWarning: divide by zero encountered in scalar divide
+  elif right_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh ffplay /dev/video0[3Pbash server.sh [Kbash server.sh ffplay /dev/video0[3Pbash server.sh [Kbash server.sh ffplay /dev/video0[3Pbash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:11:16] "GET /command/start_record HTTP/1.1" 200 -
+[48;5;0m[38;5;207m[rtsp @ 0x537d160] [0m[48;5;0m[38;5;196mmethod PLAY failed: 454 Session Not Found
+[0m^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh ffplay /dev/video0device0[4Pbash server.sh gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash server.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash run.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash server.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash server.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash server.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cffplay /dev/device0[1Pvideo0[3Pbash server.sh ffplay /dev/video0device0[4Pbash server.sh gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash server.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash run.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[?2004lInitializing Hailo device...
+Loading model: models/vit_pose_small.hef
+Opening camera: rtsp://127.0.0.1:8554/test
+[48;5;0m[38;5;207m[rtsp @ 0x322a4e00] [0m[48;5;0m[38;5;196mmethod PLAY failed: 454 Session Not Found
+[0mFailed to open rtsp://127.0.0.1:8554/test, trying /dev/video1...
+Warning: No camera found. Will try to continue anyway...
+You can use a video file instead: --camera /path/to/video.mp4
+Created new pose log file: /home/pi/Codes/Pride-and-Prejudice/server/srv_tmp/xml/pose_log_20251017_111141.xml
+Initialization complete! Camera FPS: 0
+
+Starting real-time pose estimation...
+Press 'q' to quit
+
+Failed to read frame
+
+Cleaning up...
+
+Pose log saved to: /home/pi/Codes/Pride-and-Prejudice/server/srv_tmp/xml/pose_log_20251017_111141.xml
+Session duration: 0.1 seconds
+Done!
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash run.sh [3@server[C[C[C[C
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:12:25] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:12:49] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:13:23] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.101 - - [17/Oct/2025 11:16:22] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+'stop_record' command received.
+>> stop recording!
+10.10.14.101 - - [17/Oct/2025 11:16:36] "GET /command/stop_record HTTP/1.1" 200 -
+10.10.14.101 - - [17/Oct/2025 11:16:36] "GET /download/mp4/video.mp4 HTTP/1.1" 200 -
+10.10.14.101 - - [17/Oct/2025 11:16:37] "GET /download/wav/audio.wav HTTP/1.1" 200 -
+10.10.14.101 - - [17/Oct/2025 11:16:37] "GET /download/xml/log.xml HTTP/1.1" 200 -
+10.10.14.101 - - [17/Oct/2025 11:16:37] "GET /download/wav/audio.wav HTTP/1.1" 200 -
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ls
+[?2004l[0m[01;34menv[0m     hailort.log  [01;34m__pycache__[0m  run_fa.sh   run_pal.sh  [01;34mscripts[0m    [01;34msrv_tmp[0m
+[01;32menv.sh[0m  [01;34mmodels[0m       [01;34mrefs[0m         run_mul.sh  run.sh      server.sh  typescript
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m lsbash server.sh [3Prun[C[C[C[C[3@server[C[C[C[C[3Prun[C[C[C[C[3@server[C[C[C[C[3Prun[C[C[C[C[3@server[C[C[C[Cffplay /dev/video0device0[4Pbash server.sh gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash server.sh [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true
+[?2004lSetting pipeline to PAUSED ...
+Pipeline is live and does not need PREROLL ...
+Progress: (open) Opening Stream
+Pipeline is PREROLLED ...
+Prerolled, waiting for progress to finish...
+Progress: (connect) Connecting to rtsp://localhost:8554/test
+Progress: (open) Retrieving server options
+Progress: (open) Retrieving media info
+Progress: (request) SETUP stream 0
+Progress: (request) SETUP stream 1
+Progress: (open) Opened Stream
+Setting pipeline to PLAYING ...
+New clock: GstSystemClock
+Progress: (request) Sending PLAY request
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Progress: (request) Sending PLAY request
+Redistribute latency...
+Progress: (request) Sent PLAY request
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+Redistribute latency...
+0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.0 / 99:99:99.0:00:00.1 / 99:99:99.0:00:00.2 / 99:99:99.0:00:00.3 / 99:99:99.Redistribute latency...
+0:00:00.4 / 99:99:99.0:00:00.5 / 99:99:99.0:00:00.6 / 99:99:99.0:00:00.7 / 99:99:99.0:00:00.8 / 99:99:99.0:00:00.9 / 99:99:99.0:00:01.0 / 99:99:99.0:00:01.1 / 99:99:99.0:00:01.2 / 99:99:99.0:00:01.3 / 99:99:99.0:00:01.4 / 99:99:99.0:00:01.5 / 99:99:99.0:00:01.6 / 99:99:99.0:00:01.7 / 99:99:99.0:00:01.8 / 99:99:99.0:00:01.9 / 99:99:99.0:00:02.0 / 99:99:99.0:00:02.1 / 99:99:99.0:00:02.2 / 99:99:99.0:00:02.3 / 99:99:99.0:00:02.4 / 99:99:99.0:00:02.5 / 99:99:99.0:00:02.6 / 99:99:99.0:00:02.7 / 99:99:99.0:00:02.8 / 99:99:99.0:00:02.9 / 99:99:99.0:00:03.0 / 99:99:99.0:00:03.1 / 99:99:99.0:00:03.2 / 99:99:99.0:00:03.3 / 99:99:99.0:00:03.4 / 99:99:99.0:00:03.5 / 99:99:99.0:00:03.6 / 99:99:99.0:00:03.7 / 99:99:99.0:00:03.8 / 99:99:99.0:00:03.9 / 99:99:99.0:00:04.0 / 99:99:99.0:00:04.1 / 99:99:99.0:00:04.2 / 99:99:99.0:00:04.3 / 99:99:99.0:00:04.4 / 99:99:99.0:00:04.5 / 99:99:99.0:00:04.6 / 99:99:99.0:00:04.7 / 99:99:99.0:00:04.8 / 99:99:99.0:00:04.9 / 99:99:99.0:00:05.0 / 99:99:99.0:00:05.1 / 99:99:99.0:00:05.2 / 99:99:99.0:00:05.3 / 99:99:99.0:00:05.4 / 99:99:99.0:00:05.5 / 99:99:99.0:00:05.6 / 99:99:99.0:00:05.7 / 99:99:99.0:00:05.8 / 99:99:99.0:00:05.9 / 99:99:99.0:00:06.0 / 99:99:99.0:00:06.1 / 99:99:99.0:00:06.2 / 99:99:99.0:00:06.3 / 99:99:99.0:00:06.4 / 99:99:99.0:00:06.5 / 99:99:99.0:00:06.6 / 99:99:99.0:00:06.7 / 99:99:99.0:00:06.8 / 99:99:99.0:00:06.9 / 99:99:99.0:00:07.0 / 99:99:99.0:00:07.1 / 99:99:99.0:00:07.2 / 99:99:99.0:00:07.3 / 99:99:99.0:00:07.4 / 99:99:99.0:00:07.5 / 99:99:99.0:00:07.6 / 99:99:99.0:00:07.7 / 99:99:99.0:00:07.8 / 99:99:99.0:00:07.9 / 99:99:99.0:00:08.0 / 99:99:99.0:00:08.1 / 99:99:99.0:00:08.2 / 99:99:99.0:00:08.3 / 99:99:99.0:00:08.4 / 99:99:99.0:00:08.5 / 99:99:99.0:00:08.6 / 99:99:99.0:00:08.7 / 99:99:99.0:00:08.8 / 99:99:99.0:00:08.9 / 99:99:99.0:00:09.0 / 99:99:99.0:00:09.1 / 99:99:99.0:00:09.2 / 99:99:99.0:00:09.3 / 99:99:99.0:00:09.4 / 99:99:99.0:00:09.5 / 99:99:99.0:00:09.6 / 99:99:99.^Chandling interrupt.
+Interrupt: Stopping pipeline ...
+Execution ended after 0:00:11.723236551
+Setting pipeline to NULL ...
+Freeing pipeline ...
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test !   rtph264depay ! h264parse ! avdec_h264 !   fpsdisplaysink video-sink=autovideosink text-overlay=true[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:27:19] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+'stop_record' command received.
+>> stop recording!
+10.10.14.50 - - [17/Oct/2025 11:27:48] "GET /command/stop_record HTTP/1.1" 200 -
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:28:27] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+Traceback (most recent call last):
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_est_main.py", line 356, in run
+    pose_analysis = self.pose_analyzer.analyze_pose(result['keypoints'])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py", line 181, in analyze_pose
+    gesture, gesture_msg = self.detect_gesture(keypoints)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py", line 163, in detect_gesture
+    message = "No gesture detected"
+    ^^^^^^^
+UnboundLocalError: cannot access local variable 'hands_crossed' where it is not associated with a value
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:30:03] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:169: RuntimeWarning: divide by zero encountered in scalar divide
+  elif left_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:172: RuntimeWarning: divide by zero encountered in scalar divide
+  elif right_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:127: RuntimeWarning: divide by zero encountered in scalar divide
+  d_s2e = max(left_s2e, right_s2e)/min(left_s2e, right_s2e)
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 11:31:50] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh 
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ls
+[?2004l[0m[01;34menv[0m     hailort.log  [01;34m__pycache__[0m  run_fa.sh   run_pal.sh  [01;34mscripts[0m    [01;34msrv_tmp[0m
+[01;32menv.sh[0m  [01;34mmodels[0m       [01;34mrefs[0m         run_mul.sh  run.sh      server.sh  typescript
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m pyt[K[K[Kbash run_Fa.[K[K[Kfa.sh
+[?2004lCreated new face log file: /home/pi/Codes/Pride-and-Prejudice/server/srv_tmp/xml/face_log_20251017_113700.xml
+camera opened
+input: [128, 128, 3]
+output: [5]
+[HailoRT] [[31m[1merror[m] CHECK failed - Model has more than one output!
+terminate called after throwing an instance of 'pybind11::error_already_set'
+  what():  HailoRTInvalidOperationException: Invalid operation. See hailort.log for more information
+
+At:
+  /home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/hailo_platform/pyhailort/pyhailort.py(166): _raise_indicative_status_exception
+  /home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/hailo_platform/pyhailort/pyhailort.py(118): __exit__
+  /home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/hailo_platform/pyhailort/pyhailort.py(3118): output
+  /home/pi/Codes/Pride-and-Prejudice/server/scripts/face_est/face_est_main.py(45): bbox_callback
+  /home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/hailo_platform/pyhailort/pyhailort.py(3280): callback_wrapper
+
+run_fa.sh: line 4: 24820 Aborted                 python -m scripts.face_est.face_est_main --camera './refs/test_videos/test.mp4' --debug 1
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash run_fa.sh
+[?2004lCreated new face log file: /home/pi/Codes/Pride-and-Prejudice/server/srv_tmp/xml/face_log_20251017_121158.xml
+camera opened
+input: [128, 128, 3]
+output: [5]
+faces: [[308  26  66  66]]
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+faces: [[295   2  62  62]]
+faces: [[294   3  62  62]]
+faces: [[298   5  61  61]]
+faces: [[299   5  61  61]]
+faces: [[297   5  62  62]]
+faces: [[295   8  63  63]]
+faces: [[295   8  64  64]]
+faces: [[297   8  63  63]]
+faces: [[297   7  64  64]]
+faces: [[298   4  64  64]]
+faces: [[297   4  62  62]]
+faces: [[295   4  62  62]]
+faces: [[295   6  61  61]]
+faces: [[297   7  62  62]]
+faces: [[301   4  59  59]]
+faces: [[301   3  62  62]]
+faces: [[298   4  63  63]]
+faces: [[297   7  64  64]]
+faces: [[296   7  63  63]]
+faces: [[298  10  58  58]]
+faces: [[294   7  64  64]]
+faces: [[295   8  63  63]]
+faces: [[290   7  67  67]]
+faces: [[291   8  65  65]]
+faces: [[290   9  64  64]]
+faces: [[288   6  68  68]]
+faces: [[292  12  61  61]]
+faces: [[291  13  62  62]]
+faces: [[292  13  61  61]]
+faces: [[288   9  65  65]]
+faces: [[287  10  64  64]]
+faces: [[286   9  65  65]]
+faces: [[288  12  62  62]]
+faces: [[287  11  65  65]]
+faces: [[289   8  65  65]]
+faces: [[292  10  61  61]]
+faces: [[290   8  66  66]]
+faces: [[292  11  66  66]]
+faces: [[294  16  63  63]]
+faces: [[293  16  64  64]]
+faces: [[293  16  64  64]]
+faces: [[293  16  65  65]]
+faces: [[292  16  66  66]]
+faces: [[292  20  62  62]
+ [515 112  46  46]]
+faces: [[290  15  64  64]]
+faces: [[510 112  48  48]
+ [290  15  65  65]]
+faces: [[290  16  63  63]]
+faces: [[288  15  65  65]]
+faces: [[287  13  67  67]]
+faces: [[288  13  65  65]]
+faces: [[287  12  65  65]]
+faces: [[286  14  64  64]]
+faces: [[285  10  66  66]]
+faces: [[286  11  65  65]]
+faces: [[284  11  65  65]]
+^CTraceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/face_est/face_est_main.py", line 359, in <module>
+    run_camera_inference(args.hef)
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/face_est/face_est_main.py", line 247, in run_camera_inference
+    faces = face_detect_old(gray_frame, vdevice)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/face_est/face_est_main.py", line 120, in face_detect_old
+    faces = face_cascade.detectMultiScale(image, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ls
+[?2004l[0m[01;34menv[0m     hailort.log  [01;34m__pycache__[0m  run_fa.sh   run_pal.sh  [01;34mscripts[0m    [01;34msrv_tmp[0m
+[01;32menv.sh[0m  [01;34mmodels[0m       [01;34mrefs[0m         run_mul.sh  run.sh      server.sh  typescript
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash run [K[K[K[Kserver.sh
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 12:18:28] "GET /command/start_record HTTP/1.1" 200 -
+[48;5;0m[38;5;250m[tcp @ 0x42e62a0] [0m[48;5;0m[38;5;196mConnection to tcp://127.0.0.1:8554?timeout=0 failed: Connection refused
+[0m[48;5;0m[38;5;207m[rtsp @ 0x3daba4c0] [0m[48;5;0m[38;5;196mmethod DESCRIBE failed: 503 Service Unavailable
+[0m^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 12:19:57] "GET /command/start_record HTTP/1.1" 200 -
+[48;5;0m[38;5;250m[tcp @ 0x268962a0] [0m[48;5;0m[38;5;196mConnection to tcp://127.0.0.1:8554?timeout=0 failed: Connection refused
+[0mqt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:172: RuntimeWarning: divide by zero encountered in scalar divide
+  elif left_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:175: RuntimeWarning: divide by zero encountered in scalar divide
+  elif right_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+^C[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 12:21:38] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:173: RuntimeWarning: divide by zero encountered in scalar divide
+  elif left_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+/home/pi/Codes/Pride-and-Prejudice/server/scripts/pose_est/pose_analyzer.py:176: RuntimeWarning: divide by zero encountered in scalar divide
+  elif right_hand_dist/self.eye_dist < self.gesture_distance_threshold:
+'stop_record' command received.
+>> stop recording!
+[2025-10-17 12:22:31,587] ERROR in app: Exception on /command/stop_record [GET]
+Traceback (most recent call last):
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/server.py", line 47, in execute_command
+    process_manager.recorder_finish()     # recorder 프로세스 종료
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/process_call.py", line 88, in recorder_finish
+    self.recorder.send_signal(signal.SIGINT)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send_signal'
+10.10.14.50 - - [17/Oct/2025 12:22:31] "[35m[1mGET /command/stop_record HTTP/1.1[0m" 500 -
+'stop_record' command received.
+>> stop recording!
+[2025-10-17 12:22:31,950] ERROR in app: Exception on /command/stop_record [GET]
+Traceback (most recent call last):
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/server.py", line 47, in execute_command
+    process_manager.recorder_finish()     # recorder 프로세스 종료
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/process_call.py", line 88, in recorder_finish
+    self.recorder.send_signal(signal.SIGINT)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send_signal'
+10.10.14.50 - - [17/Oct/2025 12:22:31] "[35m[1mGET /command/stop_record HTTP/1.1[0m" 500 -
+^CTraceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/face_est/face_est_main.py", line 359, in <module>
+    run_camera_inference(args.hef)
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/face_est/face_est_main.py", line 247, in run_camera_inference
+    faces = face_detect_old(gray_frame, vdevice)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/face_est/face_est_main.py", line 120, in face_detect_old
+    faces = face_cascade.detectMultiScale(image, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;pi@piai: ~/Codes/Pride-and-Prejudice/server[01;32mpi@piai[00m:[01;34m~/Codes/Pride-and-Prejudice/server $[00m bash server.sh
+[?2004l * Serving Flask app 'server'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://10.10.14.80:5000
+[33mPress CTRL+C to quit[0m
+'start_record' command received.
+>> start recording!
+10.10.14.50 - - [17/Oct/2025 12:23:22] "GET /command/start_record HTTP/1.1" 200 -
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/cv2/qt/plugins"
+'stop_record' command received.
+>> stop recording!
+[2025-10-17 12:23:40,158] ERROR in app: Exception on /command/stop_record [GET]
+Traceback (most recent call last):
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/env/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/server.py", line 47, in execute_command
+    process_manager.recorder_finish()     # recorder 프로세스 종료
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Codes/Pride-and-Prejudice/server/scripts/process_call.py", line 88, in recorder_finish
+    self.recorder.send_signal(signal.SIGINT)
+    ^^^^^^^^^^^^^^^^^^^^^^^^

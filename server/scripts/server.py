@@ -1,6 +1,7 @@
 import os
+import time
 from flask import Flask, request, send_from_directory
-from scripts.process_call import process_start, rtsp_server_finish, estimator_finish, recorder_finish
+from scripts.process_call import ProcessManager
 
 script_path = os.path.abspath(__file__)
 main_dir = os.path.dirname(os.path.dirname(script_path))
@@ -12,18 +13,8 @@ if not os.path.exists(FOLDER):
 app = Flask(__name__)
 app.config['FOLDER'] = FOLDER
 
-# 파일 업로드 처리
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return 'no file', 400
-    file = request.files['file']
-    if file.filename == '':
-        return 'no file selected', 400
-    if file:
-        filename = file.filename
-        file.save(os.path.join(app.config['FOLDER'], filename))
-        return f"'{filename}' file upload successful!", 200
+# Single ProcessManager instance used by all HTTP requests
+process_manager = ProcessManager()
 
 # File download processing (http://<Raspberry_Pi_IP>:5000/download/subfolder/filename)
 @app.route('/download/<path:filepath>')
@@ -41,20 +32,27 @@ def download_file(filepath):
 @app.route('/command/<cmd>')
 def execute_command(cmd):
     print(f"'{cmd}' command received.")
+
+    global process_manager
     
     # 'start_record' command received
     if cmd == 'start_record':
         # 여기에 실제 녹음 시작 코드를 넣으면 됩니다.
         print(">> start recording!")
-        process_start()  # 프로세스 시작
+        process_manager.rtsp_start()      # rtsp_server 프로세스 시작
+        time.sleep(1)  # rtsp_server가 완전히 시작될 때까지 잠시 대기
+        process_manager.f_estimator_start()   # estimator 프로세스 시작
+        process_manager.p_estimator_start()   # estimator 프로세스 시작
+        process_manager.recorder_start()      # recorder 프로세스 시작
         return f"'{cmd}' command executed successfully!", 200
 
     # 'stop_record' command received
     elif cmd == 'stop_record':
         print(">> stop recording!")
-        recorder_finish()       # recorder 프로세스 종료
-        estimator_finish()      # estimator 프로세스 종료
-        rtsp_server_finish()    # rtsp_server 프로세스 종료
+        process_manager.recorder_finish()     # recorder 프로세스 종료
+        process_manager.p_estimator_finish()   # estimator 프로세스 종료
+        process_manager.f_estimator_finish()   # estimator 프로세스 종료
+        process_manager.rtsp_server_finish()  # rtsp_server 프로세스 종료
         return f"'{cmd}' command executed successfully!", 200
 
     else:

@@ -1,2 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<pose_session start_time="2025-10-15T17:57:10.543321"><frame timestamp="2025-10-15T17:57:10.703131" elapsed_seconds="0.1"><analysis><result type="wrong_distance" message="Too far (eye dist: 3.3px)" /></analysis></frame><frame timestamp="2025-10-15T17:57:13.769797" elapsed_seconds="3.1"><analysis><result type="wrong_distance" message="Too far (eye dist: 0.8px)" /></analysis></frame></pose_session>
