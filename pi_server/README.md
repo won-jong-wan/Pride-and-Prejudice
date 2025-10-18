@@ -59,7 +59,7 @@ bash server.sh [DEVICE_NAME]
   * `run_po.sh`: (Pose Estimation) 자세 인식 프로세스를 실행하고 결과를 `xml`로 저장합니다.
   * `run_re.sh`: (Recording) 녹화 프로세스를 실행합니다.
 
-# 예시
+### 예시
 
 ```bash
 # cmd 1
