@@ -317,6 +317,8 @@ class RealtimePoseEstimation:
                     
                     # 전처리
                     input_data = self.preprocess(frame)
+
+                    # print(input_data.shape)
                     
                     # Bindings 생성 및 버퍼 설정
                     bindings = configured_infer_model.create_bindings()

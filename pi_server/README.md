@@ -1,7 +1,3 @@
-알겠습니다. 테스트 파일(`*.sh`) 관련 설명을 추가하여 `README.md`를 업데이트했습니다.
-
------
-
 # pi\_server
 
 `pi_server`는 라즈베리파이 5와 Hailo-8 AI 가속기를 사용하여 사용자의 데이터를 실시간으로 분석하는 RESTful API 서버입니다.
@@ -62,3 +58,14 @@ bash server.sh [DEVICE_NAME]
   * `run_fa.sh`: (Facial Analysis) 얼굴 표정 인식 프로세스를 실행하고 결과를 `xml`로 저장합니다.
   * `run_po.sh`: (Pose Estimation) 자세 인식 프로세스를 실행하고 결과를 `xml`로 저장합니다.
   * `run_re.sh`: (Recording) 녹화 프로세스를 실행합니다.
+
+### 예시
+
+```bash
+# cmd 1
+bash run_rt.sh [DEVICE_NAME]
+
+# cmd 2
+bash run_po.sh
+```
+  * [DEVICE_NAME]은 서버 실행 시와 같음
