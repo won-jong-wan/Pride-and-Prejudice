@@ -85,7 +85,7 @@ class ProcessManager:
             setattr(self, process_attr_name, None)
             return
 
-        print(f"🔄 Attempting to terminate {process_name_str} (PID: {process.pid})...")
+        print(f"Attempting to terminate {process_name_str} (PID: {process.pid})...")
         
         try:
             if use_pgkill:

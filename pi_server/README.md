@@ -68,4 +68,5 @@ bash run_rt.sh [DEVICE_NAME]
 # cmd 2
 bash run_po.sh
 ```
-  * [DEVICE_NAME]은 서버 실행 시와 같음
+  * [DEVICE_NAME]은 서버 실행 시와 같습니다.
+  * 제공된 가상환경의 사용을 전제합니다.
