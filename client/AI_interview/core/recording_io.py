@@ -43,6 +43,7 @@ def save_assets_after_stop(
         "mp4": {"url": f"{server_url}/download/mp4/video.mp4", "name": "video.mp4"},
         "wav": {"url": f"{server_url}/download/wav/audio.wav", "name": "audio.wav"},
         "xml": {"url": f"{server_url}/download/xml/log.xml",   "name": "log.xml"},
+        #"mp4": {"url": f"{server_url}/download/mp4/video_ai.mp4", "name": "video_ai.mp4"},
     }
     out: Dict[str, Path] = {}
     save_dir = get_save_dir(session_id)

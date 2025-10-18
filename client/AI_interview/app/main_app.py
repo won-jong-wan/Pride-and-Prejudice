@@ -22,7 +22,7 @@ ss.setdefault("mp4_manual_only", False)     # MP4 수동 받기
 ss.setdefault("auto_saved_once", False)
 ss.setdefault("session_id", "default_session")
 
-# ── 외부 서버 주소(라즈베리파이 Flask) ───────────────────────────────
+# ── 외부 서버 주소(Flask) ───────────────────────────────
 SERVER_URL = os.environ.get("PI_SERVER_URL", "http://10.10.14.80:5000")
 
 # ── 저장 경로 준비(업로드 모드) ────────────────────────────────────────────────────
@@ -31,7 +31,7 @@ SAVE_DIR = get_save_dir(BASE_DIR, ss["session_id"])
 
 # ── 모델/체인(세션당 1회 로드) ────────────────────────────────────────
 if "whisper_model" not in ss:
-    ss["whisper_model"] = load_whisper("small")  # small/medium/large
+    ss["whisper_model"] = load_whisper("medium")  # small/medium/large
 
 def load_google_key() -> str:
     key = os.getenv("GOOGLE_API_KEY")

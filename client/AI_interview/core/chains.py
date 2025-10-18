@@ -64,12 +64,10 @@ SESSION_PROMPT = ChatPromptTemplate.from_messages([
     ("human",
      "【음성 요약】\n{voice_summary_json}\n\n"
      "【자세 요약】\n{posture_summary_json}\n\n"
-     "【요약 힌트(음성)】{voice_hint}\n"
-     "【요약 힌트(자세)】{posture_hint}\n\n"
      "【최근 답변들】\n{history_compact_json}\n\n"
      "총 {answers}개 답변을 기반으로:\n"
      "1) 전반 총평(1~2문장)\n2) 강점(불릿 2개)\n3) 개선 제안(불릿 2개)\n"
-     "**음성(발성/전달력)**과 **자세(시선/기울임/제스처)**에 대한 코멘트를 각각 최소 1문장씩 반드시 포함.\n"
+     "**음성(발성/전달력, 음정/억양/속도/볼륨)**과 **자세(시선/기울임/제스처)**에 대한 코멘트를 각각 최소 1문장씩 반드시 포함.\n"
      "기술지표명(jitter/shimmer/HNR)은 언급하지 말 것.")
 ])
 # --- 라이브 코칭용 프롬프트 (답변별) ---

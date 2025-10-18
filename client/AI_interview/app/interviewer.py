@@ -1,20 +1,30 @@
 from __future__ import annotations
 import streamlit as st
 import requests, tempfile, base64, shutil,time
-import os, wave
+import os, wave,glob
 import numpy as np, math
-import time
+import time as _t
 from pathlib import Path
 from typing import Callable, Iterable, Tuple
 from core.analysis_audio import analyze_stability, get_stability_score
-from core.analysis_pose import parse_posture_summary
-from adapters.interviewer_adapters import my_stt_from_path as stt_fn
+from core.analysis_pose import parse_posture_summary, normalize_posture
+from adapters.interviewer_adapters import my_stt_from_path as stt_fn, load_persona_videos, shuffle_order
 from core.recording_io import save_assets_after_stop
 from core.chains import get_prompt,call_llm
+import statistics as stats, json
 
 SHOW_PER_ANSWER_METRICS = False  # 답변별 지표는 숨김
 SHOW_FINAL_METRICS      = True   # 총평에서만 지표 표시
 
+def _find_xml_for_session(session_id: str, prefer_stem: str | None = None) -> str | None:
+    """세션 폴더에서 최신 XML을 찾되, wav 스템이 있으면 우선 매칭."""
+    d = get_save_dir(session_id)
+    if prefer_stem:
+        cands = list(Path(d).glob(f"*{prefer_stem}*.xml"))
+        if cands:
+            return str(max(cands, key=os.path.getmtime))
+    cands = list(Path(d).glob("*.xml"))
+    return str(max(cands, key=os.path.getmtime)) if cands else None
 # 넘파이 스칼라 유틸 
 def _to_native(x):
     if isinstance(x, np.generic):
@@ -39,87 +49,60 @@ def is_valid_wav(path: str) -> tuple[bool, str]:
     except Exception as e:
         return False, f"기타 에러: {e}"
     
-def download_wav_direct(server_url: str, max_wait_s=20, interval_s=0.5) -> Path:
+def download_wav_direct(server_url: str, max_wait_s=20, interval_s=0.5, min_bytes=16_000) -> Path:
+    """
+    서버에서 WAV를 단일 GET으로 스트리밍 저장하고 즉시 무결성 검증.
+    - 성공 시: 총 1회 GET
+    - 실패 시: 임시파일 삭제 후 재시도 (deadline까지)
+    """
     url = f"{server_url}/download/wav/audio.wav"
     deadline = time.time() + max_wait_s
     last_err = None
+
     while time.time() < deadline:
         try:
-            r = requests.get(url, stream=True, timeout=10)
-            if r.status_code == 200 and "audio" in (r.headers.get("Content-Type", "").lower()):
+            # 1) 단일 GET (스트리밍)
+            with requests.get(url, stream=True, timeout=10) as r:
+                if r.status_code != 200:
+                    time.sleep(interval_s)
+                    continue
+
+                ctype = (r.headers.get("Content-Type", "") or "").lower()
+                # 일부 서버는 application/octet-stream 으로 내려줄 수 있음
+                if ("audio" not in ctype) and ("octet-stream" not in ctype):
+                    time.sleep(interval_s)
+                    continue
+
+                # 2) 바로 파일로 저장 (청크를 버리지 않도록 곧바로 기록)
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tf:
-                    shutil.copyfileobj(r.raw, tf)
-                    return Path(tf.name)
+                    tmp_path = Path(tf.name)
+                    for chunk in r.iter_content(chunk_size=8192):
+                        if chunk:
+                            tf.write(chunk)
+
+            # 3) 빠른 크기 하한 검사 (샘플레이트/비트뎁스에 맞춰 조정 가능)
+            if tmp_path.stat().st_size < min_bytes:
+                try: tmp_path.unlink()
+                except: pass
+                time.sleep(interval_s)
+                continue
+
+            # 4) WAV 헤더/프레임 검증
+            ok, reason = is_valid_wav(str(tmp_path))
+            if ok:
+                return tmp_path
+
+            # 무효면 삭제 후 재시도
+            try: tmp_path.unlink()
+            except: pass
+
         except Exception as e:
             last_err = e
+
         time.sleep(interval_s)
+
     raise RuntimeError(f"WAV 준비 실패: {last_err or 'timeout'}")
-"""def _save_resp_to_tmp(resp: requests.Response, server_url: str | None = None) -> Path:
-    
-    stop_record 응답이
-    1) audio/* 바이트
-    2) JSON(base64: audio_b64/file_b64)
-    3) JSON(URL/경로: file_url/server_path/file_id)
-    모두 올 때 임시 wav 파일로 저장.
-    server_url은 file_url이 상대경로일 때만 필요.
-    
-    ctype = resp.headers.get("Content-Type", "")
 
-    # 1) audio/* 직접 전송
-    if resp.status_code == 200 and "audio" in ctype:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tf:
-            shutil.copyfileobj(resp.raw, tf)
-            return Path(tf.name)
-
-    # 그 외는 JSON 처리
-    data = resp.json()
-
-    # 2) base64
-    b64 = data.get("audio_b64") or data.get("file_b64")
-    if b64:
-        raw = base64.b64decode(b64)
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tf:
-            tf.write(raw)
-            return Path(tf.name)
-
-    # 3) URL/경로
-    file_url    = data.get("file_url")
-    server_path = data.get("server_path") or data.get("path")
-    file_id     = data.get("file_id")
-
-    def _abs(u: str) -> str:
-        if u.startswith("http"):
-            return u
-        if not server_url:
-            raise RuntimeError("상대 file_url을 받았지만 server_url이 없습니다.")
-        return f"{server_url}{u}"
-
-    if file_url:
-        r2 = requests.get(_abs(file_url), stream=True, timeout=60)
-        r2.raise_for_status()
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tf:
-            shutil.copyfileobj(r2.raw, tf)
-            return Path(tf.name)
-
-    if server_path:
-        if not server_url:
-            raise RuntimeError("server_path를 받았지만 server_url이 없습니다.")
-        r2 = requests.get(f"{server_url}/download", params={"path": server_path}, stream=True, timeout=60)
-        r2.raise_for_status()
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tf:
-            shutil.copyfileobj(r2.raw, tf)
-            return Path(tf.name)
-
-    if file_id:
-        if not server_url:
-            raise RuntimeError("file_id를 받았지만 server_url이 없습니다.")
-        r2 = requests.get(f"{server_url}/download", params={"file_id": file_id}, stream=True, timeout=60)
-        r2.raise_for_status()
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tf:
-            shutil.copyfileobj(r2.raw, tf)
-            return Path(tf.name)
-
-    raise RuntimeError(f"지원하지 않는 stop_record 응답 형식: keys={list(data.keys())}")"""
 
 def resolve_posture_xml_for(wav_path: str) -> str | None:
     p = Path(wav_path); x = p.with_suffix(".xml")
@@ -127,7 +110,7 @@ def resolve_posture_xml_for(wav_path: str) -> str | None:
 
 def render_interviewer_panel(
     server_url: str,
-    tts_interviewer: Callable[[str, float], Tuple[bytes, str]],
+    tts_interviewer: Callable[[str, float], Tuple[bytes, str]],  # ← 지금은 미사용(호환만 유지)
     stt_fn: Callable[[str], str],
     feedback_fn: Callable[[str, str], str],
     questions: Iterable[str] = (
@@ -135,15 +118,11 @@ def render_interviewer_panel(
         "가장 도전적이었던 프로젝트와 역할은?",
         "문제 해결 경험을 STAR 구조로 설명해 주세요.",
     ),
-    tts_speed: float = 0.95,
+    tts_speed: float = 0.95,  # ← 미사용
 ) -> None:
     """
-    면접관 모드 패널 하나로 끝.
-    - server_url: 라즈베리 녹음 서버 기반 URL (예: http://10.0.0.5:8000)
-    - tts_interviewer(question_text, speed)->(audio_bytes, mime)
-    - stt_fn(wav_path)->text
-    - feedback_fn(question_text, answer_text)->feedback_text
-    - questions: 질문 리스트
+    면접관 모드 패널 (MP4 전용 재생으로 수정)
+    - server_url, stt_fn, feedback_fn은 아래쪽(네가 유지하는 구간)에서 그대로 사용
     """
     ss = st.session_state
     # 세션키는 eva_* 접두사로 충돌 방지
@@ -154,28 +133,101 @@ def render_interviewer_panel(
         ss.eva_auto_saved_once = False
         ss.eva_last_wav = None
         ss.eva_qidx = 0
-        ss.eva_questions = list(questions)
+        ss.eva_questions = list(questions)  # ← 하위 호환용(지금은 MP4 텍스트 사용)
         ss.eva_last_stt = ""
         ss.eva_last_fb = ""
         ss.setdefault("eva_pending_analysis", False)  # ★ 다음 런에서 분석 실행 여부
         ss.setdefault("eva_history", [])
         ss.setdefault("eva_pending_final", False)
-        
-    def interviewer_line(q: str) -> str:
-        return f"질문 드리겠습니다. {q} 답변을 시작하신 뒤, 완료되면 종료 버튼을 눌러 주세요."
+        # MP4 재생 상태 기본값
+        ss.setdefault("eva_playing", False)
+        ss.setdefault("eva_answer_enabled", False)
+        ss.setdefault("eva_current_idx", None)
+        ss.setdefault("eva_ends_at", None)
 
+    # ── 현재 질문 준비(영상 로드 + 랜덤 순서) ─────────────────────────────
+    ASSET_DIR = os.path.join(os.path.dirname(__file__), "assets")  # app/assets
+    if "eva_videos" not in ss:
+        ss.eva_videos = load_persona_videos(persona=".", asset_root=ASSET_DIR)
+
+    if "eva_order" not in ss or ss.get("eva_shuffle", False) or len(ss.eva_order) != len(ss.eva_videos):
+        ss.eva_order = shuffle_order(len(ss.eva_videos))   # 무중복 랜덤
+        ss.eva_qidx = 0
+        ss.eva_shuffle = False
+
+    cur_idx = ss.eva_order[ss.eva_qidx]
+    cur = ss.eva_videos[cur_idx]
+    ss.setdefault("eva_started", False)
+    ss.setdefault("eva_playing", False)
+    ss.setdefault("eva_answer_enabled", False)
+    ss.setdefault("eva_current_idx", None)
+    ss.setdefault("eva_ends_at", None)
+    ss.setdefault("eva_cur_dur", None)
+
+    MAX_WAIT = 20.0  # UX 상한
+
+    def _start_play(idx: int, q: dict):
+        ss.eva_started = True
+        ss.eva_playing = True
+        ss.eva_answer_enabled = False
+        ss.eva_current_idx = idx
+        ss.eva_cur_dur = min(q["duration"], MAX_WAIT)
+        ss.eva_ends_at = time.time() + ss.eva_cur_dur
+        st.rerun()
     c1, c2, c3 = st.columns([1, 1, 1])
 
-    # 1) 면접 시작/다음 질문 (TTS 재생)
+  # ── c1: 면접 시작(처음 1회만 활성화)
     with c1:
-        if st.button("🎤 면접 시작 / 다음 질문", use_container_width=True, disabled=ss.eva_recording):
-            q = ss.eva_questions[ss.eva_qidx]
-            try:
-                audio_bytes, mime = tts_interviewer(interviewer_line(q), tts_speed)
-                st.audio(audio_bytes, format=mime)  # "audio/wav" or "audio/mp3"
-                st.toast(f"Q{ss.eva_qidx + 1} 재생 완료")
-            except Exception as e:
-                st.error(f"TTS 재생 실패: {e}")
+        if st.button("▶ 면접 시작", use_container_width=True,
+                    disabled=ss.get("eva_started", False) or ss.get("eva_recording", False)):
+            _start_play(cur_idx, cur)  # 상태 세팅 + st.rerun()
+
+    # ── 면접관 영상은 mid에서 렌더
+    left, mid, right = st.columns([2.5, 2, 2.5])
+    with mid:
+        if ss.get("eva_playing") and ss.get("eva_current_idx") == cur_idx:
+            st.video(cur["mp4"], start_time=0)
+
+    # ── 타이머: 조용히 갱신해서 끝나면 자동 활성화
+    if ss.get("eva_ends_at"):
+        remain = ss.eva_ends_at - time.time()
+        if remain <= 0:
+            ss.eva_playing = False
+            ss.eva_answer_enabled = True
+            ss.eva_ends_at = None
+        else:
+            _t.sleep(min(0.5, max(0.1, remain)))
+            st.rerun()
+
+        # ── c3: '다음 질문'은 시작 이후엔 항상 보이지만, 조건에 따라 disabled
+    with right:
+        if ss.get("eva_started", False):
+            next_disabled = (
+                ss.get("eva_playing", False)               # 재생 중이면 비활성
+                or not ss.get("eva_answer_enabled", False) # 답변 가능 상태 아니면 비활성
+                or ss.get("eva_recording", False)          # 녹음 중이면 비활성
+            )
+
+            # 버튼 크기 줄이기: 더 좁은 column에 꽉 채워 넣기
+            btn_col, _ = st.columns([11, 1])  # ← 1/4 폭
+            with btn_col:
+                clicked = st.button(
+                    "➡ 다음 질문",
+                    key="btn_next",
+                    use_container_width=True,
+                    disabled=next_disabled,
+                )
+
+            if clicked:
+                order = ss.eva_order
+                if not order:
+                    st.warning("다음 질문 목록이 비어 있어요.")
+                else:
+                    # 인덱스는 order 길이에 맞춰 회전
+                    ss.eva_qidx = (ss.eva_qidx + 1) % len(order)
+                    next_idx = order[ss.eva_qidx]
+                    next_q   = ss.eva_videos[next_idx]
+                    _start_play(next_idx, next_q)  # 누르는 즉시 다음 영상 자동 재생
 
     with c2:
         col_start, col_stop = st.columns(2)
@@ -201,7 +253,8 @@ def render_interviewer_panel(
                         ss.eva_auto_saved_once = False
                         ss.eva_last_wav = None
 
-                        st.success("면접이 시작했습니다. 답변을 말씀해 주세요.")
+                        st.success("면접이 시작했습니다. " 
+                                   "답변을 말씀해 주세요.")
                     except requests.exceptions.RequestException as e:
                         st.error(f"요청 실패: {e}")
                     finally:
@@ -239,6 +292,9 @@ def render_interviewer_panel(
         with st.spinner("저장 중…"):
             saved = save_assets_after_stop(server_url, ss.get("session_id", "sess"), kinds=kinds)
         if saved:
+            # ★ 저장된 로컬 경로를 세션에 고정해 둔다
+            if "wav" in saved: ss.eva_last_wav  = str(saved["wav"])
+            if "xml" in saved: ss.eva_last_xml = str(saved["xml"])
             ss.eva_auto_saved_once = True
             st.success("저장 완료!")
 
@@ -253,20 +309,18 @@ def render_interviewer_panel(
                         ss.eva_last_wav = str(wav_path)
 
                     # 2) (보너스) 파일이 없어졌으면 다시 다운로드
-                    import os
                     if not os.path.exists(ss.eva_last_wav):
                         wav_path = download_wav_direct(server_url, max_wait_s=30, interval_s=0.5)
                         ss.eva_last_wav = str(wav_path)
 
                     # 3) 유효성 검사 → STT(경로 기반)
-                    st.info("WAV 유효성 검사…")
                     ok, info = is_valid_wav(ss.eva_last_wav)
                     if not ok:
                         st.error(f"오디오 파일 이상: {info}")
                         ss.eva_pending_analysis = False
                         st.stop()
 
-                    st.info("STT 진행 중…")
+                    st.info("답변 텍스트로 변환중…")
                     ss.eva_last_stt = stt_fn(ss.eva_last_wav)   # my_stt_from_path 사용
 
                     qtext = ss.eva_questions[ss.eva_qidx] if ss.eva_questions else f"Q{ss.eva_qidx+1}"
@@ -286,12 +340,22 @@ def render_interviewer_panel(
                     except Exception:
                         pass
                     try:
-                        xml_path = resolve_posture_xml_for(ss.eva_last_wav)
-                        if xml_path:
-                            posture_metrics = parse_posture_summary(xml_path)
-                    except Exception:
-                        pass
+                        xml_path = ss.get("eva_last_xml")
+                        if not xml_path:
+                            xml_path = resolve_posture_xml_for(ss.eva_last_wav)  # wav와 같은 이름의 .xml
+                        if not xml_path:
+                            stem = Path(ss.eva_last_wav).stem if ss.get("eva_last_wav") else None
+                            xml_path = _find_xml_for_session(ss.get("session_id", "sess"), prefer_stem=stem)
 
+                        if xml_path and os.path.exists(xml_path):
+                            raw = parse_posture_summary(xml_path) or {}
+                            posture_metrics = normalize_posture(raw)  # ★ 정규화해서 키 통일
+                        else:
+                            st.warning(f"자세 XML을 찾지 못함: wav={ss.get('eva_last_wav')}, xml={xml_path}")
+                    except Exception as e:
+                        st.warning(f"자세 요약 파싱 실패: {e}")
+                    ss.eva_voice_summary   = pitch_metrics or ss.get("eva_voice_summary")   or {}
+                    ss.eva_posture_summary = posture_metrics or ss.get("eva_posture_summary") or {}
                     # 화면 출력
                     st.markdown("### 📝 이번 답변")
                     st.write(ss.eva_last_stt or "(빈 텍스트)")
@@ -325,7 +389,6 @@ def render_interviewer_panel(
     elif ss.eva_pending_final and not ss.eva_pending_analysis:
         with final_box:
             try:
-                import statistics as stats, json
                 # --- (그대로 유지) 지표 집계 ---
                 def _avg(seq):
                     xs = [x for x in seq if x is not None]
@@ -353,21 +416,28 @@ def render_interviewer_panel(
                     "frames_total":      int(total_frames),
                 }
 
+                posture_dict = summary_posture or ss.get("eva_posture_summary") or {}
+                voice_dict   = summary_voice   or ss.get("eva_voice_summary")   or {}
+
+                posture_json = json.dumps(posture_dict, ensure_ascii=False)  # ← 끝에 쉼표(,) 금지!
+                voice_json   = json.dumps(voice_dict,   ensure_ascii=False)
+
                 # --- (화면 출력 X) 지표는 LLM 프롬프트로만 전달 ---
                 history_compact = [{
                     "q": h["qtext"],
                     "stt": (h.get("stt","")[:150] + "…") if h.get("stt") and len(h["stt"])>150 else (h.get("stt") or "")
                 } for h in ss.eva_history[-8:]]
+                history_compact_json = json.dumps(history_compact, ensure_ascii=False)
 
                 messages = get_prompt("session").format_messages(
-                    voice_summary_json=json.dumps(summary_voice, ensure_ascii=False),
-                    posture_summary_json=json.dumps(summary_posture, ensure_ascii=False),
-                    history_compact_json=json.dumps(history_compact, ensure_ascii=False),
-                    answers=len(ss.eva_history),
+                   voice_summary_json=voice_json,
+                posture_summary_json=posture_json,
+                history_compact_json=history_compact_json,
+                answers=len(ss.get("eva_history", [])),
                 )
 
                 summary_text = call_llm(messages)
-                st.markdown("## 🧾 면접 총평")
+                st.markdown("## 🧾 면접 결과")
                 st.write(summary_text)
 
                 st.success("면접 총평 생성 완료")
@@ -385,18 +455,3 @@ def render_interviewer_panel(
     # 상태 표시
     st.markdown("🟢 **답변 중입니다...**" if ss.eva_recording else "⚪ **면접 대기 중**")
     st.markdown("---")
-    st.subheader(f"Q{ss.eva_qidx + 1}. {ss.eva_questions[ss.eva_qidx]}")
-
-    # 결과 표시
-    if ss.eva_last_stt:
-        st.markdown("**STT 결과**"); st.write(ss.eva_last_stt)
-    if ss.eva_last_fb:
-        st.markdown("**피드백**"); st.write(ss.eva_last_fb)
-
-    # 다음 질문 이동
-    if st.button("➡️ 다음 질문으로", disabled=ss.eva_recording):
-        ss.eva_qidx = (ss.eva_qidx + 1) % len(ss.eva_questions)
-        ss.eva_last_wav = None
-        ss.eva_stopped = False
-        ss.eva_auto_saved_once = False
-        st.toast(f"Q{ss.eva_qidx + 1}로 이동")
