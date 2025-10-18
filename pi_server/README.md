@@ -67,5 +67,5 @@ bash run_rt.sh [DEVICE_NAME]
 
 # cmd 2
 bash run_po.sh
-``
-  * DEVICE_NAME은 서버 실행 시와 같음
+```
+  * [DEVICE_NAME]은 서버 실행 시와 같음
